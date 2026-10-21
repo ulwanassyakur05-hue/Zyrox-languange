@@ -3,398 +3,454 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#061321">
-<meta name="description" content="Zyrox Language V3.0 — Mega Syntax Registry">
-<title>ZYROX — Mega Syntax Registry V3.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#081426">
+<title>Zyrox Language V3.1</title>
 <style>
-:root{--bg:#061321;--panel:#0b2034;--panel2:#102b42;--text:#eff8ff;--muted:#a8bfd1;--mint:#42f5d4;--blue:#65b8ff;--border:#234157}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:radial-gradient(ellipse at top,#123b52 0,var(--bg) 48rem);color:var(--text);font:15px/1.65 system-ui,sans-serif}
-a{color:inherit;text-decoration:none}
-.wrap{width:min(1120px,92%);margin:auto}
-header{position:sticky;top:0;z-index:5;background:#061321eF;backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:13px 0}
-.brand{font-size:1.15rem;font-weight:950;letter-spacing:2px;display:flex;align-items:center;gap:10px}
-.logo{display:grid;place-items:center;width:38px;height:38px;background:var(--mint);color:#031b1a;border-radius:12px}
-.navlinks{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:.88rem}
-.navlinks a:hover{color:var(--mint)}
-.hero{padding:72px 0 46px;display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center}
-.tag,.pill{display:inline-block;border:1px solid #42f5d455;border-radius:99px;padding:5px 10px;color:var(--mint);background:#42f5d40d;font-size:.78rem;font-weight:800}
-h1{font-size:clamp(2.8rem,8vw,5.6rem);line-height:.98;letter-spacing:-.065em;margin:20px 0}
-h1 span{color:var(--mint)}
-h2{font-size:clamp(1.6rem,4vw,2.35rem);line-height:1.2;margin:8px 0}
-h3{margin:4px 0 8px}
-.lead,.desc{color:var(--muted);max-width:700px}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
-.btn{display:inline-flex;justify-content:center;align-items:center;border:1px solid var(--border);border-radius:11px;padding:10px 15px;background:#ffffff08;color:var(--text);font-weight:800;cursor:pointer;font:inherit}
-.btn.primary{background:var(--mint);color:#031b1a;border-color:var(--mint)}
-.btn:hover{filter:brightness(1.12)}
-.terminal,.panel{background:#091c2d;border:1px solid var(--border);border-radius:17px;overflow:hidden}
-.term-top{padding:12px 15px;border-bottom:1px solid var(--border);color:var(--muted)}
-pre{margin:0;padding:19px;overflow:auto;color:#d9f4ff;font:13px/1.9 ui-monospace,monospace}
-.mint,code{color:var(--mint)}
-.blue{color:var(--blue)}
-section{padding:38px 0;scroll-margin-top:85px}
-.eyebrow{color:var(--mint);text-transform:uppercase;letter-spacing:.14em;font-size:.75rem;font-weight:900}
-.section-head{margin-bottom:20px}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
-.card,.member{padding:19px;background:linear-gradient(145deg,#102b42cc,#071828);border:1px solid var(--border);border-radius:15px}
-.card p,.member p{margin:0;color:var(--muted);font-size:.92rem}
-.playground{padding:20px}
-.editor{width:100%;min-height:190px;resize:vertical;background:#04111e;color:#d9f4ff;border:1px solid #28455b;border-radius:12px;padding:15px;font:14px/1.8 ui-monospace,monospace;outline:none}
-.editor:focus,input:focus{border-color:var(--mint)}
-.controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.output{background:#04111e;border:1px solid var(--border);border-radius:12px;min-height:85px;padding:14px;white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.8 ui-monospace,monospace}
-.output-label{color:var(--mint);font-weight:900;margin:12px 0 5px}
-.registry-tools{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
-input,select{min-width:0;background:#081b2b;color:var(--text);border:1px solid var(--border);border-radius:10px;padding:12px;font:inherit}
-#search{flex:1;min-width:190px}
-#categoryFilter{max-width:100%;flex:1}
-.registry{display:grid;gap:10px}
-details.category{border:1px solid var(--border);border-radius:13px;background:#0b2034c9;overflow:hidden}
-details.category[open]{border-color:#42f5d455}
-summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px}
-summary::-webkit-details-marker{display:none}
-.cat-title{font-weight:850}
-.cat-count{color:var(--muted);font-size:.78rem;white-space:nowrap}
-.commands{padding:0 12px 13px;display:grid;gap:6px}
-.command{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#041522;border:1px solid #1a3549;border-radius:9px;padding:8px 10px}
-.command code{font-size:.83rem;overflow-wrap:anywhere;white-space:pre-wrap}
-.copy{flex-shrink:0;border:1px solid #28455b;border-radius:7px;background:#102b42;color:var(--muted);padding:5px 8px;cursor:pointer}
-.copy:hover{color:var(--mint)}
-.status{font-size:.7rem;color:var(--blue);border:1px solid #65b8ff44;border-radius:99px;padding:2px 7px;white-space:nowrap}
-.notice{padding:13px 15px;margin-top:14px;border-left:3px solid var(--blue);background:#65b8ff0b;color:var(--muted);border-radius:0 9px 9px 0;font-size:.88rem}
-.team{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.member strong{display:block}
-.member span{color:var(--mint);font-size:.84rem}
-.empty{color:var(--muted);padding:20px;text-align:center}
-footer{border-top:1px solid var(--border);margin-top:35px;padding:25px 0;color:var(--muted);font-size:.85rem}
-@media(max-width:760px){.hero{grid-template-columns:1fr;padding-top:45px}.cards{grid-template-columns:1fr}.team{grid-template-columns:repeat(2,1fr)}.navlinks{gap:9px}.playground{padding:13px}}
-@media(max-width:420px){.team{grid-template-columns:1fr 1fr}.navlinks a:nth-child(2){display:none}.command{align-items:flex-start}}
+:root {
+  --bg:#081426;
+  --panel:#101f35;
+  --panel2:#162944;
+  --text:#e8f1ff;
+  --muted:#9bb0cb;
+  --blue:#53a8ff;
+  --green:#42e6a4;
+  --border:#29415f;
+  --red:#ff7676;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family:system-ui,Arial,sans-serif;
+  color:var(--text);
+  background:radial-gradient(ellipse at top,#173459,var(--bg) 65%);
+  line-height:1.6;
+}
+header {
+  padding:30px 18px;
+  text-align:center;
+  border-bottom:1px solid var(--border);
+  background:#081426cc;
+}
+.logo { font-size:35px;font-weight:900;letter-spacing:3px;color:var(--blue); }
+header p,.muted { color:var(--muted); }
+nav {
+  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+  padding:13px;background:var(--panel);
+  position:sticky;top:0;z-index:5;
+}
+nav a {
+  color:var(--text);text-decoration:none;padding:8px 12px;
+  border-radius:9px;background:var(--panel2);
+}
+nav a:hover { color:var(--green); }
+main { max-width:1050px;margin:auto;padding:20px 14px; }
+section {
+  margin:20px 0;padding:20px;
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:17px;
+}
+h1,h2,h3 { line-height:1.25; }
+h2 { color:var(--blue); }
+button,input,textarea,select {
+  font:inherit;border-radius:9px;padding:11px;
+}
+button {
+  cursor:pointer;border:0;background:var(--blue);
+  color:#071426;font-weight:800;
+}
+button.secondary { background:var(--panel2);color:var(--text);border:1px solid var(--border); }
+button:hover { filter:brightness(1.1); }
+textarea,input,select {
+  width:100%;background:#071321;color:var(--text);
+  border:1px solid var(--border);
+}
+textarea { min-height:190px;resize:vertical;font-family:monospace; }
+.actions { display:flex;gap:9px;flex-wrap:wrap;margin:12px 0; }
+.output {
+  white-space:pre-wrap;overflow-wrap:anywhere;min-height:75px;
+  background:#050d18;border:1px solid var(--border);
+  border-radius:10px;padding:13px;font-family:monospace;
+}
+.error { color:var(--red); }
+.cards {
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:13px;
+}
+.card {
+  padding:15px;border-radius:12px;
+  border:1px solid var(--border);background:var(--panel2);
+  overflow-wrap:anywhere;
+}
+.card h3 { margin-top:0;color:var(--green); }
+code,.syntax {
+  font-family:monospace;background:#071321;padding:3px 6px;border-radius:5px;
+}
+footer { text-align:center;padding:25px;color:var(--muted); }
+.small { font-size:13px;color:var(--muted); }
 </style>
 </head>
 <body>
+
 <header>
-<nav class="wrap">
-<a class="brand" href="#home"><span class="logo">Z</span> ZYROX</a>
-<div class="navlinks">
-<a href="#about">Tentang</a>
-<a href="#playground">Playground</a>
-<a href="#registry">Syntax Registry</a>
-<a href="#team">Tim</a>
-</div>
-</nav>
+  <div class="logo">ZYROX</div>
+  <h1>ZYROX LANGUAGE V3.1</h1>
+  <p>Mega Syntax Registry · Interactive Playground · User Input</p>
+  <p>Language Development Project</p>
 </header>
 
+<nav>
+  <a href="#home">Home</a>
+  <a href="#playground">Playground</a>
+  <a href="#registry">Syntax Registry</a>
+  <a href="#team">Team</a>
+</nav>
+
 <main>
-<div class="wrap hero" id="home">
-<div>
-<span class="tag">● ZYROX LANGUAGE · V3.0</span>
-<h1>Code beyond<br><span>limits.</span></h1>
-<p class="lead">Mega Syntax Registry — katalog eksperimen Zyrox untuk input, output, logika, matematika, data, sistem, graphics, dan banyak lagi.</p>
-<div class="actions">
-<a class="btn primary" href="#playground">▶ Coba Zyrox</a>
-<a class="btn" href="#registry">Jelajahi semua syntax ↘</a>
-</div>
-</div>
-<div class="terminal">
-<div class="term-top">● ● ● &nbsp; zyrox_demo.zx</div>
-<pre><span class="blue">// Zyrox Language V3.0</span>
-
-<span class="mint">Print.true</span>("Hello World")
-
-<span class="mint">fact</span> {
-  <span class="blue">Ref</span> = "Zyrox"
-}
-
-<span class="blue"># Keep testing...</span></pre>
-</div>
-</div>
-
-<section class="wrap" id="about">
-<div class="section-head">
-<div class="eyebrow">About Zyrox</div>
-<h2>Bahasa yang dibangun lewat eksperimen.</h2>
-<p class="desc">Zyrox adalah proyek bahasa pemrograman eksperimental. Registry ini mengumpulkan syntax inti dan proposal pengembangan dalam satu tempat.</p>
-</div>
-<div class="cards">
-<article class="card"><h3>⌘ Syntax eksperimental</h3><p>Rancangan perintah untuk teks, kondisi, variabel, dan pemrosesan data.</p></article>
-<article class="card"><h3>⌁ Test & research</h3><p>Mencari inkonsistensi, menguji aturan, dan memperjelas cara kerja setiap perintah.</p></article>
-<article class="card"><h3>◈ Menuju V3.0</h3><p>Membedakan ide, syntax yang disepakati, dan fitur yang sudah benar-benar diimplementasikan.</p></article>
-</div>
-<div class="notice">Status penting: CORE = definisi inti yang sudah disepakati. PROPOSED = usulan API. EXPERIMENTAL = konsep yang memerlukan desain dan implementasi lebih lanjut.</div>
+<section id="home">
+  <h2>Welcome to Zyrox</h2>
+  <p>
+    Zyrox adalah proyek bahasa pemrograman eksperimental.
+    V3.1 memperkenalkan input pengguna dan interpreter sederhana
+    untuk menguji sintaks Zyrox langsung di browser.
+  </p>
+  <div class="cards">
+    <div class="card"><h3>Interactive</h3><p>Tulis dan jalankan kode.</p></div>
+    <div class="card"><h3>User Input</h3><p>Masukkan teks, angka, dan konfirmasi.</p></div>
+    <div class="card"><h3>Syntax Registry</h3><p>Jelajahi sintaks yang terdaftar.</p></div>
+  </div>
 </section>
 
-<section class="wrap" id="playground">
-<div class="section-head">
-<div class="eyebrow">Interactive Playground</div>
-<h2>Coba Zyrox di sini</h2>
-<p class="desc">Tulis perintah, lalu tekan RUN. Interpreter demo ini menjalankan Print.true dan Print.false; perintah katalog lain belum otomatis dieksekusi.</p>
-</div>
-<div class="panel playground">
-<label for="zyroxCode">Editor — main.zx</label>
-<textarea class="editor" id="zyroxCode" spellcheck="false">Print.true("Hello World")
-Print.true("Welcome to Zyrox V3.0")
-Print.false("Teks ini tidak ditampilkan")</textarea>
-<div class="controls">
-<button class="btn primary" id="runBtn">▶ RUN</button>
-<button class="btn" id="clearBtn">CLEAR OUTPUT</button>
-<button class="btn" id="resetBtn">RESET CODE</button>
-</div>
-<div class="output-label">OUTPUT</div>
-<div class="output" id="output" aria-live="polite">Output akan muncul di sini...</div>
-<div class="notice">Demo interpreter terbatas. Jangan memasukkan password atau data pribadi. Perintah seperti File.delete, DB.query, Network.connect, dan Security.encrypt hanya berupa entri katalog di halaman ini.</div>
-</div>
+<section id="playground">
+  <h2>Interactive Playground</h2>
+  <p class="muted">
+    Input.get(Nama), Input.text(Nama), Input.number(Umur),
+    Input.confirm(Lanjut), dan Print.true(...).
+  </p>
+
+  <label for="zyroxCode">Editor Zyrox</label>
+  <textarea id="zyroxCode" spellcheck="false">Input.get(Nama)
+Print.true("Halo " + Nama)
+Print.true("Selamat datang di Zyrox V3.1")</textarea>
+
+  <div class="actions">
+    <button id="runBtn">▶ RUN</button>
+    <button id="clearBtn" class="secondary">CLEAR OUTPUT</button>
+    <button id="resetBtn" class="secondary">RESET CODE</button>
+  </div>
+
+  <h3>Output</h3>
+  <div id="output" class="output" aria-live="polite">Output akan muncul di sini.</div>
+  <p class="small">
+    Input menggunakan dialog browser. Jangan memasukkan informasi rahasia.
+  </p>
 </section>
 
-<section class="wrap" id="registry">
-<div class="section-head">
-<div class="eyebrow">Mega Syntax Registry</div>
-<h2>Semua command Zyrox.</h2>
-<p class="desc">Cari nama fungsi atau buka kategori untuk melihat command. Gunakan tombol COPY untuk menyalin syntax.</p>
-</div>
-<div class="registry-tools">
-<input id="search" type="search" placeholder="Cari syntax, misalnya Math.sqrt..." aria-label="Cari syntax">
-<select id="categoryFilter" aria-label="Filter kategori"><option value="">Semua 26 kategori</option></select>
-<button class="btn" id="expandBtn">Buka semua</button>
-<button class="btn" id="collapseBtn">Tutup semua</button>
-</div>
-<div id="registryList" class="registry"></div>
-<div id="resultCount" class="notice" aria-live="polite"></div>
-<div class="notice">Catatan: katalog ini mendokumentasikan nama command dan rancangan parameter. Daftar command bukan bukti bahwa runtime sudah mendukung seluruh fungsi.</div>
+<section id="registry">
+  <h2>Mega Syntax Registry</h2>
+  <p class="muted">Cari sintaks untuk melihat definisi dan status dukungannya.</p>
+  <input id="searchSyntax" type="search" placeholder="Cari sintaks Zyrox...">
+  <div id="syntaxResults" class="cards" style="margin-top:15px"></div>
+  <p id="registryCount" class="small"></p>
 </section>
 
-<section class="wrap" id="team">
-<div class="section-head">
-<div class="eyebrow">Collaboration</div>
-<h2>Struktur proyek.</h2>
-</div>
-<div class="team">
-<div class="member"><strong>GPT</strong><span>Owner / Lead Developer</span><p>Membantu merancang syntax dan interpreter.</p></div>
-<div class="member"><strong>Gemini</strong><span>Co-Owner / Manager</span><p>Meninjau rancangan dan memberi evaluasi.</p></div>
-<div class="member"><strong>Dola</strong><span>Contributor</span><p>Membantu meninjau ide dan mencari bug.</p></div>
-<div class="member"><strong>Ulwan</strong><span>Tester · Original Creator</span><p>Menguji syntax, bereksperimen, dan melakukan riset.</p></div>
-</div>
+<section id="team">
+  <h2>Zyrox Development Team</h2>
+  <p class="muted">Daftar peran tim dalam proyek.</p>
+  <div class="cards">
+    <div class="card">
+      <h3>GPT</h3>
+      <p>Owner / Lead Developer</p>
+      <p class="small">Peran dalam struktur proyek yang disepakati.</p>
+    </div>
+    <div class="card">
+      <h3>Cil</h3>
+      <p>Tester · Original Creator</p>
+      <p class="small">Pengujian sintaks, eksperimen, dan riset.</p>
+    </div>
+    <div class="card">
+      <h3>Dola / Mimin Dola</h3>
+      <p>Contributor</p>
+    </div>
+    <div class="card">
+      <h3>Ucup / Yusuf / Hamzah</h3>
+      <p>Member</p>
+      <p class="small">Member of the Zyrox Language Team.</p>
+    </div>
+  </div>
 </section>
 </main>
 
-<footer><div class="wrap">© <span id="year"></span> Zyrox Project · Mega Syntax Registry V3.0 · Website demo.</div></footer>
+<footer>
+  <strong>ZYROX LANGUAGE V3.1</strong>
+  <p>Experimental language project · GitHub Pages</p>
+</footer>
 
 <script>
+"use strict";
+
+const editor = document.getElementById("zyroxCode");
+const output = document.getElementById("output");
+const defaultCode = editor.value;
+
+/*
+ * Syntax registry.
+ * Beberapa item adalah proposal/konsep, bukan perintah interpreter.
+ */
 const registry = [
-["01. Input System","Input.get(Username)|Input.text(Message)|Input.number(Age)|Input.confirm(Agreement)|Input.password(Password)|Input.choice(Option)|Input.key(Key)|Input.line(Text)|Input.read(Data)|Input.clear(Username)|Input.submit(Data)|Input.cancel()|Input.required(Value)|Input.optional(Value)|Input.default(Value)|Input.placeholder(Text)|Input.validate(Data)|Input.type(Value)|Input.length(Value)|Input.limit(Value)|Input.range(Min, Max)|Input.multiline(Text)|Input.select(Options)|Input.search(Query)|Input.filter(Data)|Input.reset()|Input.status()"],
-["02. Output dan Print System","Print.true(Message)|Print.false(Message)|Print.text(Message)|Print.number(Value)|Print.line(Message)|Print.empty()|Print.repeat(Message)|Print.clear()|Print.result(Value)|Print.error(Error)|Print.warning(Message)|Print.status(State)|Print.debug(Code)|Print.table(Data)|Print.list(Data)|Print.json(Data)|Print.format(Value)|Print.color(Color, Text)|Print.progress(Value)|Print.success(Message)|Print.loading()|Print.header(Title)|Print.footer(Text)|Print.separator()|Print.timestamp()|Print.variable(Name)|Print.type(Value)|Print.length(Value)|Print.flush()|Print.end()"],
-["03. Variable dan Memory System","Var(Username)|Var.Value(100)|Var.Type(Text)|Var.Set(Score, 50)|Var.Get(Score)|Var.Reset(Score)|Var.Delete(Score)|Var.Copy(A, B)|Var.Swap(A, B)|Var.Exists(Name)|Var.Rename(A, B)|Var.Lock(Name)|Var.Unlock(Name)|Var.Const(Name, Value)|Var.Global(Name)|Var.Local(Name)|Var.Scope(Name)|Var.Assign(A, B)|Var.Increment(Score)|Var.Decrement(Score)|Var.Append(List, Value)|Var.Remove(List, Value)|Var.Index(List, Position)|Var.Keys(Object)|Var.Values(Object)|Var.Count(Object)|Var.Memory()|Var.Release(Name)|Var.Backup(Name)|Var.Restore(Name)"],
-["04. Logic System","Logic.and(A, B)|Logic.or(A, B)|Logic.not(A)|Logic.xor(A, B)|Logic.nand(A, B)|Logic.nor(A, B)|Logic.xnor(A, B)|Logic.true(Condition)|Logic.false(Condition)|Logic.compare(A, B)|Logic.match(Text, Pattern)|Logic.verify(Data)|Logic.validate(Input)|Logic.evaluate(Expression)|Logic.resolve(Condition)|Logic.combine(A, B)|Logic.invert(Value)|Logic.implies(A, B)|Logic.equivalent(A, B)|Logic.consistent(Data)|Logic.contradiction(A, B)|Logic.priority(A, B)|Logic.chain(Conditions)|Logic.branch(Condition)|Logic.fallback(Value)|Logic.unknown(Value)|Logic.resolve_unknown(Value)|Logic.all(Conditions)|Logic.any(Conditions)|Logic.none(Conditions)"],
-["05. Fact, Not, dan Decision System","fact(Condition)|not(Condition)|If.fact(Condition)|If.not(Condition)|Fact.check(Value)|Fact.confirm(Value)|Fact.reject(Value)|Fact.resolve(Value)|Fact.store(Value)|Fact.compare(A, B)|Fact.status(Value)|Fact.source(Value)|Fact.reset(Value)|Decision.make(Condition)|Decision.choose(Option)|Decision.accept(Value)|Decision.deny(Value)|Decision.defer(Value)|Decision.priority(Option)|Decision.default(Option)|Decision.alternative(Option)|Decision.final(Result)|Decision.reconsider(Result)|Decision.history()|Decision.undo()|Decision.commit()|Decision.cancel()"],
-["06. Comparison System","Compare.equal(A, B)|Compare.not_equal(A, B)|Compare.greater(A, B)|Compare.less(A, B)|Compare.greater_equal(A, B)|Compare.less_equal(A, B)|Compare.between(Value, Min, Max)|Compare.inside(Value, Range)|Compare.outside(Value, Range)|Compare.contains(A, B)|Compare.identical(A, B)|Compare.similar(A, B)|Compare.different(A, B)|Compare.nearest(A, B)|Compare.farthest(A, B)|Compare.minimum(Data)|Compare.maximum(Data)|Compare.sort(Data)|Compare.rank(Data)|Compare.score(A, B)|Compare.version(A, B)|Compare.timestamp(A, B)|Compare.priority(A, B)|Compare.approx(A, B)"],
-["07. Math System","Math.add(A, B)|Math.subtract(A, B)|Math.multiply(A, B)|Math.divide(A, B)|Math.modulo(A, B)|Math.power(A, B)|Math.sqrt(Number)|Math.cbrt(Number)|Math.abs(Number)|Math.min(A, B)|Math.max(A, B)|Math.round(Number)|Math.floor(Number)|Math.ceil(Number)|Math.truncate(Number)|Math.pi()|Math.tau()|Math.e()|Math.factorial(Number)|Math.gcd(A, B)|Math.lcm(A, B)|Math.average(Data)|Math.median(Data)|Math.mode(Data)|Math.sum(Data)|Math.product(Data)|Math.percent(Value, Total)|Math.random(Min, Max)|Math.clamp(Value, Min, Max)|Math.sign(Number)|Math.log(Number)|Math.log10(Number)|Math.exp(Number)|Math.sin(Angle)|Math.cos(Angle)|Math.tan(Angle)|Math.sigma(Start, End)|Math.integral(Expression)|Math.derivative(Expression)|Math.limit(Expression)|Math.infinity()|Math.remainder(A, B)|Math.reciprocal(Number)|Math.normalize(Value)|Math.interpolate(A, B, T)|Math.distance(A, B)|Math.factor(Number)"],
-["08. Loop dan Iteration System","Loop.start(10)|Loop.end()|Loop.repeat(5)|Loop.forever()|Loop.stop()|Loop.skip()|Loop.count(100)|Loop.until(Condition)|Loop.while(Condition)|Loop.each(Item)|Loop.for(Start, End)|Loop.reverse(Start, End)|Loop.nested(Depth)|Loop.break()|Loop.continue()|Loop.index()|Loop.current()|Loop.total()|Loop.remaining()|Loop.reset()|Loop.pause()|Loop.resume()|Loop.limit(Number)|Loop.interval(Value)|Loop.every(Value)|Loop.once()|Loop.batch(Data)|Loop.parallel(Tasks)|Loop.sequential(Tasks)|Loop.retry(Task)|Loop.retry_limit(Task, Number)|Loop.on_complete(Action)|Loop.on_error(Action)"],
-["09. Function dan Procedure System","Function.define(Name)|Function.call(Name)|Function.return(Value)|Function.argument(Value)|Function.parameter(Name)|Function.default(Name, Value)|Function.optional(Name)|Function.required(Name)|Function.validate(Name)|Function.exists(Name)|Function.rename(A, B)|Function.clone(Name)|Function.reset(Name)|Function.remove(Name)|Function.list()|Function.count()|Function.scope(Name)|Function.recursive(Name)|Function.async(Name)|Function.await(Task)|Function.callback(Action)|Function.compose(A, B)|Function.pipe(A, B)|Function.map(Data, Function)|Function.filter(Data, Function)|Function.reduce(Data, Function)|Function.memoize(Name)|Function.timeout(Name, Duration)|Function.cancel(Name)|Function.result(Name)|Function.error(Name)"],
-["10. Text Processing System","Text.upper(Value)|Text.lower(Value)|Text.title(Value)|Text.capitalize(Value)|Text.length(Value)|Text.reverse(Value)|Text.split(Value)|Text.join(A, B)|Text.replace(A, B)|Text.find(Value)|Text.trim(Value)|Text.contains(A, B)|Text.starts_with(A, B)|Text.ends_with(A, B)|Text.compare(A, B)|Text.format(Value)|Text.repeat(Value, Count)|Text.slice(Value, Start, End)|Text.substring(Value, Start, End)|Text.index(Value)|Text.last_index(Value)|Text.remove(Value)|Text.insert(Value, Position)|Text.pad_left(Value, Length)|Text.pad_right(Value, Length)|Text.normalize(Value)|Text.encode(Value)|Text.decode(Value)|Text.escape(Value)|Text.unescape(Value)|Text.tokenize(Value)|Text.words(Value)|Text.lines(Value)|Text.count_words(Value)|Text.count_chars(Value)|Text.is_empty(Value)|Text.is_numeric(Value)|Text.is_alpha(Value)|Text.is_alphanumeric(Value)|Text.is_upper(Value)|Text.is_lower(Value)|Text.mask(Value)|Text.template(Value)|Text.extract(Value, Pattern)|Text.match(Value, Pattern)|Text.sanitize(Value)|Text.wrap(Value, Length)|Text.truncate(Value, Length)|Text.diff(A, B)"],
-["11. List, Array, dan Collection System","List.create()|List.add(Data, Value)|List.remove(Data, Value)|List.insert(Data, Index, Value)|List.get(Data, Index)|List.set(Data, Index, Value)|List.first(Data)|List.last(Data)|List.pop(Data)|List.push(Data, Value)|List.shift(Data)|List.unshift(Data, Value)|List.length(Data)|List.clear(Data)|List.sort(Data)|List.reverse(Data)|List.unique(Data)|List.merge(A, B)|List.split(Data, Size)|List.slice(Data, Start, End)|List.find(Data, Value)|List.filter(Data, Condition)|List.map(Data, Function)|List.reduce(Data, Function)|List.every(Data, Condition)|List.some(Data, Condition)|List.none(Data, Condition)|List.flatten(Data)|List.zip(A, B)|List.chunk(Data, Size)|List.shuffle(Data)|List.sample(Data)|List.index(Data, Value)|List.includes(Data, Value)|List.intersection(A, B)|List.union(A, B)|List.difference(A, B)|List.copy(Data)|List.freeze(Data)|List.validate(Data)"],
-["12. Object dan Dictionary System","Object.create()|Object.get(Name, Key)|Object.set(Name, Key, Value)|Object.delete(Name, Key)|Object.has(Name, Key)|Object.keys(Name)|Object.values(Name)|Object.entries(Name)|Object.merge(A, B)|Object.clone(Name)|Object.copy(A, B)|Object.freeze(Name)|Object.unfreeze(Name)|Object.seal(Name)|Object.type(Name)|Object.length(Name)|Object.clear(Name)|Object.rename_key(Name, A, B)|Object.compare(A, B)|Object.validate(Name)|Object.serialize(Name)|Object.deserialize(Data)|Object.defaults(Name, Data)|Object.pick(Name, Keys)|Object.omit(Name, Keys)|Object.deep_copy(Name)|Object.deep_merge(A, B)"],
-["13. Ref dan Block System","Ref(Position)|Ref.Target(Object)|Ref.Source(Data)|Ref.Next(Position)|Ref.Previous(Position)|Ref.Parent(Position)|Ref.Child(Position)|Ref.Current()|Ref.First()|Ref.Last()|Ref.Find(Target)|Ref.Exists(Target)|Ref.Compare(A, B)|Ref.Copy(A, B)|Ref.Reset()|Ref.Resolve(Target)|Ref.Redirect(Target)|Ref.Link(A, B)|Ref.Unlink(A, B)|Ref.Follow(Target)|Ref.Trace(Target)|Ref.Path(Target)|Ref.Depth(Target)|Ref.Root(Target)|Ref.Index(Target)|Ref.Offset(Target)|Ref.Validate(Target)|[ Start ]|[ End ]|[ Focus ]|[ Block ]|[ Scope ]|[ Group ]|[ Section ]|[ Region ]|[ Protected ]|[ Temporary ]|[ Static ]|[ Dynamic ]|[ Begin ]|[ Finish ]|[ Nested ]|[ Parallel ]|[ Sequence ]|[ Conditional ]|[ Repeat ]|[ Transaction ]"],
-["14. Error, Exception, dan Debug System","Error.detect(Code)|Error.show(Message)|Error.ignore(Error)|Error.reset()|Error.type(Code)|Error.line(Number)|Error.fix(Error)|Error.warning(Message)|Error.stop()|Error.report()|Error.capture(Action)|Error.handle(Error)|Error.throw(Error)|Error.raise(Error)|Error.clear()|Error.last()|Error.count()|Error.history()|Error.severity(Error)|Error.source(Error)|Error.context(Error)|Error.recover(Error)|Error.retry(Action)|Error.fallback(Action)|Error.suppress(Error)|Error.convert(Error)|Error.is_fatal(Error)|Error.on_error(Action)|Debug.start()|Debug.stop()|Debug.log(Value)|Debug.trace(Function)|Debug.inspect(Object)|Debug.breakpoint()|Debug.watch(Variable)|Debug.step()|Debug.step_over()|Debug.step_out()|Debug.continue()|Debug.variables()|Debug.stack()|Debug.memory()|Debug.timing(Action)|Debug.profile(Action)|Debug.assert(Condition)|Debug.compare(A, B)|Debug.snapshot(State)|Debug.restore(State)|Debug.enabled()|Debug.disable()"],
-["15. File System","File.open(Name)|File.read(Name)|File.write(Name, Data)|File.save(Data)|File.close(Name)|File.exists(Name)|File.delete(Name)|File.rename(A, B)|File.copy(A, B)|File.move(A, B)|File.size(Name)|File.type(Name)|File.path(Name)|File.extension(Name)|File.create(Name)|File.append(Name, Data)|File.truncate(Name)|File.permissions(Name)|File.metadata(Name)|File.modified(Name)|File.created(Name)|File.list(Path)|File.search(Path, Query)|File.compare(A, B)|File.backup(Name)|File.restore(Name)|File.compress(Name)|File.decompress(Name)|File.hash(Name)|File.read_bytes(Name)|File.write_bytes(Name, Data)|File.watch(Name)|File.unwatch(Name)|File.validate(Name)|File.encoding(Name)"],
-["16. Data dan Serialization System","Data.get(Key)|Data.set(Key, Value)|Data.copy(A, B)|Data.clear()|Data.validate(Value)|Data.export(Format)|Data.import(Source)|Data.convert(Value, Type)|Data.merge(A, B)|Data.split(Value)|Data.filter(Value)|Data.sort(Value)|Data.search(Value)|Data.normalize(Value)|Data.transform(Value)|Data.aggregate(Value)|Data.group(Value)|Data.count(Value)|Data.size(Value)|Data.type(Value)|Data.schema(Value)|Data.validate_schema(Value)|Data.serialize(Value)|Data.deserialize(Value)|Data.encode(Value)|Data.decode(Value)|Data.compress(Value)|Data.decompress(Value)|Data.hash(Value)|Data.checksum(Value)|Data.compare(A, B)|Data.diff(A, B)|Data.patch(A, Changes)|Data.snapshot(Value)|Data.restore(Snapshot)|Data.expire(Key, Duration)|Data.version(Key)|Data.history(Key)|Data.rollback(Key)"],
-["17. Database System","DB.connect(Source)|DB.disconnect()|DB.query(Query)|DB.execute(Command)|DB.select(Table)|DB.insert(Table, Data)|DB.update(Table, Data)|DB.delete(Table, Condition)|DB.create_table(Name)|DB.drop_table(Name)|DB.rename_table(A, B)|DB.find(Table, Query)|DB.filter(Table, Condition)|DB.sort(Table, Field)|DB.count(Table)|DB.exists(Table)|DB.begin()|DB.commit()|DB.rollback()|DB.backup()|DB.restore(Backup)|DB.index(Field)|DB.remove_index(Field)|DB.schema(Table)|DB.validate(Table)|DB.transaction(Action)|DB.lock(Resource)|DB.unlock(Resource)|DB.status()|DB.ping()|DB.timeout(Duration)|DB.cache(Key, Value)|DB.clear_cache()"],
-["18. System dan Runtime","System.info()|System.version()|System.status()|System.restart()|System.stop()|System.time()|System.date()|System.check()|System.name()|System.platform()|System.architecture()|System.uptime()|System.environment()|System.variables()|System.arguments()|System.permissions()|System.resources()|System.memory()|System.cpu()|System.processes()|System.process(Name)|System.kill(Process)|System.signal(Process, Signal)|System.exit(Code)|System.sleep(Duration)|System.wake()|System.path()|System.directory()|System.locale()|System.language()|System.timezone()|System.configuration()|System.reload()|System.health()|System.diagnostics()|System.capabilities()|System.shutdown()"],
-["19. Security dan Permission System","Security.verify(User)|Security.permission(User)|Security.lock(Resource)|Security.unlock(Resource)|Security.mask(Data)|Security.authenticate(User)|Security.authorize(User, Action)|Security.deny(User, Action)|Security.role(User)|Security.grant(User, Permission)|Security.revoke(User, Permission)|Security.policy(Name)|Security.validate_policy(Name)|Security.audit(Action)|Security.audit_log()|Security.encrypt(Data)|Security.decrypt(Data)|Security.hash(Data)|Security.compare_hash(A, B)|Security.random_token()|Security.expire_token(Token)|Security.session_start(User)|Security.session_end(User)|Security.session_valid(User)|Security.rate_limit(Action)|Security.sanitize(Input)|Security.validate_input(Input)|Security.redact(Data)|Security.integrity(Data)|Security.safe_mode()|Security.permission_check(Action)|Security.access_log()"],
-["20. Time dan Date System","Time.now()|Time.start()|Time.stop()|Time.reset()|Time.wait(Duration)|Time.elapsed()|Time.remaining()|Time.timestamp()|Time.format(Value)|Time.parse(Value)|Time.add(A, B)|Time.subtract(A, B)|Time.compare(A, B)|Time.before(A, B)|Time.after(A, B)|Time.between(A, B)|Time.duration(A, B)|Time.milliseconds()|Time.seconds()|Time.minutes()|Time.hours()|Time.days()|Time.weekday()|Time.month()|Time.year()|Time.leap_year(Year)|Time.timezone()|Time.utc()|Time.local()|Time.schedule(Action, Date)|Time.cancel_schedule(ID)|Time.interval(Action, Duration)|Time.timeout(Action, Duration)|Time.deadline(Action, Date)|Time.sleep(Duration)|Time.resume()|Time.freeze()|Time.unfreeze()"],
-["21. Event dan Notification System","Event.create(Name)|Event.emit(Name, Data)|Event.listen(Name, Action)|Event.once(Name, Action)|Event.off(Name, Action)|Event.remove(Name)|Event.exists(Name)|Event.count()|Event.queue(Name)|Event.dispatch(Name)|Event.cancel(Name)|Event.pause(Name)|Event.resume(Name)|Event.history(Name)|Event.clear_history()|Event.priority(Name, Level)|Event.delay(Name, Duration)|Event.filter(Name, Condition)|Event.transform(Name, Function)|Event.on_start(Action)|Event.on_finish(Action)|Event.on_error(Action)|Notify.send(Message)|Notify.success(Message)|Notify.warning(Message)|Notify.error(Message)|Notify.info(Message)|Notify.clear()|Notify.count()|Notify.history()|Notify.dismiss(ID)|Notify.sound(Name)|Notify.priority(Message, Level)|Notify.queue(Message)|Notify.schedule(Message, Date)|Notify.permission()"],
-["22. Network dan API System","Network.status()|Network.connect(Address)|Network.disconnect()|Network.ping(Address)|Network.latency(Address)|Network.resolve(Hostname)|Network.interfaces()|Network.address()|Network.timeout(Duration)|Network.retry(Request)|Network.validate(Address)|Network.monitor(Address)|Network.transfer(Data)|Network.cancel(Transfer)|Network.statistics()|Network.reconnect()|API.get(URL)|API.post(URL, Data)|API.put(URL, Data)|API.patch(URL, Data)|API.delete(URL)|API.request(Method, URL)|API.header(Key, Value)|API.headers(Data)|API.body(Data)|API.response()|API.status()|API.parse(Response)|API.validate(Response)|API.timeout(Duration)|API.retry(Request)|API.cancel(Request)|API.authenticate(Credentials)|API.rate_limit()|API.version()|API.endpoint(Name)"],
-["23. Tracking dan Coordinate System","Track.start(Target)|Track.stop(Target)|Track.status(Target)|Track.position(Target)|Track.distance(A, B)|Track.history(Target)|Track.reset(Target)|Track.update(Target)|Track.detect(Target)|Track.follow(Target)|Track.speed(Target)|Track.direction(Target)|Track.heading(Target)|Track.altitude(Target)|Track.accuracy(Target)|Track.timestamp(Target)|Track.compare(A, B)|Track.nearest(Target, Data)|Track.farthest(Target, Data)|Track.path(Target)|Track.route(A, B)|Track.waypoint(Position)|Track.add_waypoint(Position)|Track.remove_waypoint(Position)|Track.pause(Target)|Track.resume(Target)|Track.record(Target)|Track.export(Target)|Track.filter(Target, Condition)|Track.bounds(Area)|Track.validate(Position)|Track.source(Target)|Track.permission(Target)"],
-["24. Animation dan Graphics System","Animation.start(Object)|Animation.stop(Object)|Animation.pause(Object)|Animation.resume(Object)|Animation.speed(Object, Value)|Animation.frame(Number)|Animation.reset(Object)|Animation.loop(Object)|Animation.reverse(Object)|Animation.duration(Object, Time)|Animation.delay(Object, Time)|Animation.easing(Object, Type)|Animation.fade_in(Object)|Animation.fade_out(Object)|Animation.move(Object, Position)|Animation.rotate(Object, Angle)|Animation.scale(Object, Value)|Animation.resize(Object, Size)|Animation.visible(Object, State)|Animation.destroy(Object)|Animation.clone(Object)|Animation.sequence(Animations)|Animation.parallel(Animations)|Animation.blend(A, B)|Animation.transition(A, B)|Animation.progress(Object)|Animation.complete(Object)|Animation.on_finish(Action)|Animation.on_frame(Action)|Graphics.create(Object)|Graphics.draw(Shape)|Graphics.clear()|Graphics.color(Object, Color)|Graphics.opacity(Object, Value)|Graphics.position(Object, Position)|Graphics.size(Object, Size)|Graphics.layer(Object, Layer)|Graphics.render(Scene)|Graphics.refresh()|Graphics.snapshot()|Graphics.export(Format)"],
-["25. Audio dan Media System","Audio.load(Source)|Audio.play(Source)|Audio.pause()|Audio.resume()|Audio.stop()|Audio.restart()|Audio.volume(Value)|Audio.mute()|Audio.unmute()|Audio.duration(Source)|Audio.position()|Audio.seek(Position)|Audio.loop(State)|Audio.speed(Value)|Audio.fade_in(Duration)|Audio.fade_out(Duration)|Audio.playlist(List)|Audio.next()|Audio.previous()|Audio.shuffle()|Audio.repeat(Mode)|Audio.status()|Audio.export(Format)|Media.load(Source)|Media.open(Source)|Media.close()|Media.info(Source)|Media.type(Source)|Media.duration(Source)|Media.thumbnail(Source)|Media.resize(Size)|Media.crop(Area)|Media.rotate(Angle)|Media.convert(Format)|Media.compress()|Media.export(Format)|Media.metadata(Source)|Media.validate(Source)"],
-["26. Zyrox Special Text Syntax",'(#Hello World."True-text)|(#Hello World."False-Text")']
+  ["Print.true()", "Menampilkan nilai atau teks.", "Didukung"],
+  ["Print.false()", "Tidak menampilkan teks.", "Didukung"],
+  ["Input.get(Name)", "Meminta input teks dari pengguna.", "Didukung"],
+  ["Input.text(Name)", "Meminta input teks dari pengguna.", "Didukung"],
+  ["Input.number(Name)", "Meminta input angka dari pengguna.", "Didukung"],
+  ["Input.confirm(Name)", "Meminta konfirmasi Ya/Tidak.", "Didukung"],
+  ["fact", "Konsep keputusan bernilai benar.", "Konsep"],
+  ["not", "Konsep alternatif atau negasi.", "Konsep"],
+  ["and", "Konsep penggabungan kondisi.", "Konsep"],
+  ["Ref", "Referensi atau posisi.", "Konsep"],
+  ["[ ]", "Blok atau fokus kode.", "Konsep"],
+  ["(#Text.True-text)", "Bentuk khusus teks; True-text tidak menghasilkan output.", "Didukung"],
+  ["(#Text.False-Text)", "Menampilkan kata-kata secara bertahap dalam output.", "Didukung"],
+  ["Variable", "Menyimpan nilai untuk digunakan kembali.", "Sebagian"],
+  ["String", "Nilai berupa teks.", "Konsep"],
+  ["Number", "Nilai berupa angka.", "Konsep"],
+  ["Boolean", "Nilai benar atau salah.", "Konsep"],
+  ["If", "Konsep percabangan kondisi.", "Konsep"],
+  ["Else", "Alternatif ketika kondisi tidak terpenuhi.", "Konsep"],
+  ["Loop", "Konsep pengulangan perintah.", "Konsep"],
+  ["Function", "Konsep fungsi yang dapat digunakan ulang.", "Konsep"],
+  ["Array", "Konsep kumpulan nilai.", "Konsep"],
+  ["Object", "Konsep kumpulan properti.", "Konsep"],
+  ["Return", "Konsep pengembalian nilai.", "Konsep"],
+  ["Import", "Konsep pemanggilan modul.", "Konsep"],
+  ["Export", "Konsep ekspor modul.", "Konsep"],
+  ["Debug", "Konsep pemeriksaan kesalahan.", "Konsep"],
+  ["Print.log()", "Proposal pencatatan output.", "Konsep"],
+  ["Input.password()", "Proposal input kata sandi.", "Konsep"],
+  ["Math", "Kategori operasi matematika.", "Konsep"],
+  ["Time", "Kategori operasi waktu.", "Konsep"],
+  ["Track", "Proposal pelacakan.", "Konsep"],
+  ["fact and not", "Proposal kombinasi logika.", "Konsep"],
+  ["deft", "Proposal sintaks; definisi belum ditetapkan.", "Konsep"],
+  ["True-text", "Mode teks khusus Zyrox.", "Didukung"],
+  ["False-Text", "Mode teks khusus Zyrox.", "Didukung"]
 ];
 
-const core = new Set([
-"Print.true(Message)",
-"Print.false(Message)",
-"fact(Condition)",
-"not(Condition)",
-"Ref(Position)",
-"[ Start ]",
-"[ End ]"
-]);
+function readValue(expression, variables) {
+  const value = expression.trim();
 
-const registryList = document.getElementById("registryList");
-const search = document.getElementById("search");
-const categoryFilter = document.getElementById("categoryFilter");
-const resultCount = document.getElementById("resultCount");
-document.getElementById("year").textContent = new Date().getFullYear();
-
-const normalized = registry.map((group,index)=>({
- title:group[0],
- id:"cat"+index,
- commands:group[1].split("|")
-}));
-
-normalized.forEach(group=>{
- const opt=document.createElement("option");
- opt.value=group.id;
- opt.textContent=group.title;
- categoryFilter.appendChild(opt);
-});
-
-function makeCommand(command){
- const row=document.createElement("div");
- row.className="command";
- const code=document.createElement("code");
- code.textContent=command;
- const right=document.createElement("div");
- right.style.cssText="display:flex;align-items:center;gap:7px";
- const status=document.createElement("span");
- status.className="status";
- status.textContent=core.has(command)?"CORE":"PROPOSED";
- const copy=document.createElement("button");
- copy.className="copy";
- copy.textContent="COPY";
- copy.type="button";
- copy.title="Salin "+command;
- copy.addEventListener("click",async()=>{
-  try{
-   await navigator.clipboard.writeText(command);
-   copy.textContent="COPIED!";
-   setTimeout(()=>copy.textContent="COPY",1000);
-  }catch(e){
-   const t=document.createElement("textarea");
-   t.value=command;
-   document.body.appendChild(t);
-   t.select();
-   try{document.execCommand("copy");copy.textContent="COPIED!"}
-   catch(err){copy.textContent="SELECT"}
-   t.remove();
-   setTimeout(()=>copy.textContent="COPY",1000);
+  if (
+    value.length >= 2 &&
+    ((value[0] === '"' && value.at(-1) === '"') ||
+     (value[0] === "'" && value.at(-1) === "'"))
+  ) {
+    return value.slice(1, -1)
+      .replace(/\\n/g, "\n")
+      .replace(/\\t/g, "\t")
+      .replace(/\\"/g, '"')
+      .replace(/\\'/g, "'");
   }
- });
- right.append(status,copy);
- row.append(code,right);
- return row;
+
+  if (Object.prototype.hasOwnProperty.call(variables, value)) {
+    return variables[value];
+  }
+
+  if (/^-?\d+(?:\.\d+)?$/.test(value)) return Number(value);
+  if (value === "true") return true;
+  if (value === "false") return false;
+
+  throw new Error("Nilai atau variabel tidak dikenal: " + value);
 }
 
-function renderRegistry(){
- const query=search.value.trim().toLowerCase();
- const selected=categoryFilter.value;
- registryList.replaceChildren();
- let visibleGroups=0,visibleCommands=0;
+function evaluate(expression, variables) {
+  const parts = [];
+  let current = "";
+  let quote = "";
+  let escaped = false;
 
- normalized.forEach(group=>{
-  if(selected && group.id!==selected)return;
-  const commands=group.commands.filter(command=>(
-   command.toLowerCase().includes(query)||
-   group.title.toLowerCase().includes(query)
-  ));
-  if(!commands.length)return;
-  visibleGroups++;
-  visibleCommands+=commands.length;
+  for (const char of expression) {
+    if (escaped) {
+      current += char;
+      escaped = false;
+      continue;
+    }
 
-  const details=document.createElement("details");
-  details.className="category";
-  details.id=group.id;
-  if(query||selected)details.open=true;
+    if (char === "\\" && quote) {
+      current += char;
+      escaped = true;
+      continue;
+    }
 
-  const summary=document.createElement("summary");
-  const title=document.createElement("span");
-  title.className="cat-title";
-  title.textContent=group.title;
-  const count=document.createElement("span");
-  count.className="cat-count";
-  count.textContent=commands.length+" command"+(commands.length===1?"":"s")+"  ＋";
-  summary.append(title,count);
+    if ((char === '"' || char === "'") &&
+        (!quote || quote === char)) {
+      quote = quote ? "" : char;
+      current += char;
+      continue;
+    }
 
-  const list=document.createElement("div");
-  list.className="commands";
-  commands.forEach(command=>list.appendChild(makeCommand(command)));
-  details.append(summary,list);
-  details.addEventListener("toggle",()=>{
-   count.textContent=commands.length+" commands "+(details.open?"−":"＋");
-  });
-  registryList.appendChild(details);
- });
- if(!visibleGroups){
-  const empty=document.createElement("div");
-  empty.className="empty";
-  empty.textContent="Syntax tidak ditemukan. Coba kata kunci lain.";
-  registryList.appendChild(empty);
- }
- resultCount.textContent=`Menampilkan ${visibleCommands} command dalam ${visibleGroups} kategori dari ${normalized.length} kategori.`;
+    if (char === "+" && !quote) {
+      parts.push(current.trim());
+      current = "";
+    } else {
+      current += char;
+    }
+  }
+
+  if (quote) throw new Error("Tanda kutip belum ditutup.");
+  parts.push(current.trim());
+
+  return parts.map(part => readValue(part, variables))
+    .reduce((a, b) => {
+      if (typeof a === "string" || typeof b === "string") {
+        return String(a) + String(b);
+      }
+      if (typeof a === "number" && typeof b === "number") return a + b;
+      throw new Error("Operator + membutuhkan teks atau angka.");
+    });
 }
 
-search.addEventListener("input",renderRegistry);
-categoryFilter.addEventListener("change",renderRegistry);
-document.getElementById("expandBtn").addEventListener("click",()=>{
- document.querySelectorAll("details.category").forEach(el=>el.open=true);
+function interpret(source) {
+  const results = [];
+  const errors = [];
+  const variables = Object.create(null);
+  const lines = source.split(/\r?\n/);
+
+  for (let index = 0; index < lines.length; index++) {
+    const line = lines[index].trim();
+    if (!line || line.startsWith("//")) continue;
+
+    try {
+      const inputMatch = line.match(
+        /^Input\.(get|text|number|confirm)\s*\(\s*([A-Za-z_]\w*)\s*\)\s*;?$/i
+      );
+
+      if (inputMatch) {
+        const type = inputMatch[1].toLowerCase();
+        const name = inputMatch[2];
+
+        if (type === "confirm") {
+          variables[name] = window.confirm("Konfirmasi untuk " + name + "?");
+        } else {
+          const answer = window.prompt("Masukkan " + name + ":");
+
+          if (answer === null) {
+            throw new Error("Input dibatalkan.");
+          }
+
+          if (type === "number") {
+            if (answer.trim() === "" || !Number.isFinite(Number(answer))) {
+              throw new Error("Input harus berupa angka.");
+            }
+            variables[name] = Number(answer);
+          } else {
+            variables[name] = answer;
+          }
+        }
+        continue;
+      }
+
+      const printMatch = line.match(
+        /^Print\.(true|false)\s*\((.*)\)\s*;?$/i
+      );
+
+      if (printMatch) {
+        if (printMatch[1].toLowerCase() === "true") {
+          results.push(String(evaluate(printMatch[2], variables)));
+        }
+        continue;
+      }
+
+      const special = line.match(
+        /^\(#(.+)\."(True-text|False-Text)"\)$/i
+      );
+
+      if (special) {
+        if (special[2].toLowerCase() === "false-text") {
+          results.push(...special[1].trim().split(/\s+/));
+        }
+        continue;
+      }
+
+      // Assignment sederhana: Nama = "teks" atau Nama = 123
+      const assignment = line.match(/^([A-Za-z_]\w*)\s*=\s*(.+);?$/);
+
+      if (assignment) {
+        variables[assignment[1]] = evaluate(assignment[2], variables);
+        continue;
+      }
+
+      throw new Error("Perintah belum didukung.");
+    } catch (error) {
+      errors.push("Baris " + (index + 1) + ": " + error.message);
+    }
+  }
+
+  return { results, errors };
+}
+
+document.getElementById("runBtn").addEventListener("click", () => {
+  output.classList.remove("error");
+  output.textContent = "Menjalankan program...";
+
+  const result = interpret(editor.value);
+  let text = result.results.join("\n");
+
+  if (result.errors.length) {
+    if (text) text += "\n\n";
+    text += "[Interpreter Error]\n" + result.errors.join("\n");
+    output.classList.add("error");
+  }
+
+  output.textContent = text || "(Tidak ada output)";
 });
-document.getElementById("collapseBtn").addEventListener("click",()=>{
- document.querySelectorAll("details.category").forEach(el=>el.open=false);
+
+document.getElementById("clearBtn").addEventListener("click", () => {
+  output.textContent = "";
+  output.classList.remove("error");
 });
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  editor.value = defaultCode;
+  output.textContent = "Kode direset.";
+  output.classList.remove("error");
+});
+
+function renderRegistry(query = "") {
+  const container = document.getElementById("syntaxResults");
+  const normalized = query.trim().toLowerCase();
+
+  const filtered = registry.filter(item =>
+    item.some(value => value.toLowerCase().includes(normalized))
+  );
+
+  container.replaceChildren();
+
+  for (const [syntax, description, status] of filtered) {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const heading = document.createElement("h3");
+    heading.textContent = syntax;
+
+    const detail = document.createElement("p");
+    detail.textContent = description;
+
+    const badge = document.createElement("p");
+    badge.className = "small";
+    badge.textContent = "Status: " + status;
+
+    card.append(heading, detail, badge);
+    container.append(card);
+  }
+
+  document.getElementById("registryCount").textContent =
+    filtered.length + " dari " + registry.length + " sintaks ditampilkan.";
+}
+
+document.getElementById("searchSyntax").addEventListener("input", event => {
+  renderRegistry(event.target.value);
+});
+
 renderRegistry();
-
-const editor=document.getElementById("zyroxCode");
-const output=document.getElementById("output");
-const defaultCode=editor.value;
-
-function interpret(source){
- const results=[];
- const errors=[];
- const lines=source.split(/\r?\n/);
-
- lines.forEach((raw,index)=>{
-  const line=raw.trim();
-  if(!line||line.startsWith("//"))return;
-
-  const printMatch=line.match(/^Print\.(true|false)\s*\(\s*(["'])(.*?)\2\s*\)\s*;?$/i);
-  if(printMatch){
-   if(printMatch[1].toLowerCase()==="true"){
-    results.push(printMatch[3]
-      .replace(/\\n/g,"\n")
-      .replace(/\\t/g,"\t")
-      .replace(/\\"/g,'"')
-      .replace(/\\'/g,"'"));
-   }
-   return;
-  }
-
-  const special=line.match(/^\(#(.+)\."(True-text|False-Text)"\)$/i);
-  if(special){
-   if(special[2].toLowerCase()==="false-text"){
-    results.push(...special[1].trim().split(/\s+/));
-   }
-   return;
-  }
-
-  if(/^Print\.true\s*\(/i.test(line)||/^Print\.false\s*\(/i.test(line)){
-   errors.push(`Baris ${index+1}: format Print tidak valid.`);
-   return;
-  }
-
-  errors.push(`Baris ${index+1}: command belum didukung interpreter demo.`);
- });
-
- return {results,errors};
-}
-
-document.getElementById("runBtn").addEventListener("click",()=>{
- const result=interpret(editor.value);
- let text=result.results.join("\n");
- if(result.errors.length){
-  if(text)text+="\n\n";
-  text+="[Interpreter]\n"+result.errors.join("\n");
- }
- output.textContent=text||"Tidak ada output.";
-});
-document.getElementById("clearBtn").addEventListener("click",()=>{
- output.textContent="";
-});
-document.getElementById("resetBtn").addEventListener("click",()=>{
- editor.value=defaultCode;
- output.textContent="Kode direset. Tekan RUN untuk menjalankan.";
-});
 </script>
 </body>
 </html>
