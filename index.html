@@ -104,6 +104,35 @@
       .cta { align-items: flex-start; flex-direction: column; }
     }
     @media (max-width: 420px) { .navlinks a:nth-child(3) { display: none; } .team { grid-template-columns: 1fr 1fr; } }
+
+    /* ZYROX V3.2 — Modern unified UI */
+    :root{--bg:#050914;--panel:#0b1224;--panel-2:#101c32;--text:#f3f8ff;--muted:#9eafc9;--mint:#55ffe0;--blue:#62a8ff;--border:rgba(128,173,255,.18)}
+    body{background:radial-gradient(ellipse at 15% -10%,rgba(38,110,191,.25),transparent 38rem),radial-gradient(ellipse at 100% 20%,rgba(40,255,212,.09),transparent 34rem),#050914;background-attachment:fixed}
+    header{background:rgba(5,9,20,.78);border-bottom-color:rgba(98,168,255,.18)}
+    .wrap{width:min(1160px,92%)}
+    .logo{border-radius:13px;background:linear-gradient(135deg,#55ffe0,#62a8ff);box-shadow:0 0 32px rgba(85,255,224,.22)}
+    .hero{padding:100px 0 74px;gap:50px}
+    h1{font-size:clamp(3.3rem,9vw,6.7rem);letter-spacing:-.085em}
+    h1 span{background:linear-gradient(100deg,#55ffe0,#62a8ff 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .tag{background:rgba(85,255,224,.06);box-shadow:inset 0 0 22px rgba(85,255,224,.025)}
+    .terminal,.card,.member,.syntax,.playground,.cta{backdrop-filter:blur(18px);box-shadow:0 18px 60px rgba(0,0,0,.16)}
+    .terminal{border-radius:22px;border-color:rgba(98,168,255,.28);box-shadow:0 24px 90px rgba(0,0,0,.3),0 0 45px rgba(98,168,255,.055)}
+    .term-top{background:rgba(98,168,255,.045)}
+    .btn{transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;border-radius:13px}
+    .btn.primary{background:linear-gradient(110deg,#55ffe0,#78c7ff);box-shadow:0 8px 28px rgba(85,255,224,.12)}
+    .btn.secondary{background:rgba(255,255,255,.045)}
+    .btn:hover{box-shadow:0 8px 24px rgba(98,168,255,.13)}
+    .card,.member,.syntax{border-color:rgba(128,173,255,.16);background:linear-gradient(145deg,rgba(17,31,55,.82),rgba(8,15,30,.86));transition:transform .2s ease,border-color .2s ease}
+    .card:hover,.member:hover,.syntax:hover{transform:translateY(-3px);border-color:rgba(85,255,224,.38)}
+    .playground{border:1px solid var(--border);border-radius:22px;background:linear-gradient(145deg,rgba(14,26,47,.94),rgba(7,13,27,.96));overflow:hidden}
+    #zyroxCode,.output{background:#050a16;border-color:rgba(98,168,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}
+    #zyroxCode:focus{border-color:var(--mint);box-shadow:0 0 0 3px rgba(85,255,224,.08)}
+    .output{color:#c9fff2}
+    .notice{border-left-color:var(--mint);background:rgba(85,255,224,.045)}
+    .cta{border-radius:22px}
+    footer{border-top-color:rgba(128,173,255,.14)}
+    ::selection{background:rgba(85,255,224,.25);color:#fff}
+    @media(max-width:760px){.hero{padding:62px 0 42px}.play-grid{gap:14px}.navlinks{justify-content:flex-end}}
   </style>
 </head>
 <body>
@@ -324,5 +353,16 @@ Print.line("Today: " + Date.today())</textarea>
     $('year').textContent = new Date().getFullYear();
 
   </script>
+<script>
+  // Make the demo CTA useful without changing interpreter behavior.
+  document.getElementById('helloBtn')?.addEventListener('click', () => {
+    const editor = document.getElementById('zyroxCode');
+    if (editor) {
+      editor.value = 'Print.line("Hello from Zyrox V3.2!")\nPrint.line("Ready to experiment.")';
+      editor.focus();
+      document.getElementById('playground')?.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  });
+</script>
 </body>
 </html>
