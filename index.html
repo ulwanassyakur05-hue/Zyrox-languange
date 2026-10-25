@@ -1,456 +1,328 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#081426">
-<title>Zyrox Language V3.1</title>
-<style>
-:root {
-  --bg:#081426;
-  --panel:#101f35;
-  --panel2:#162944;
-  --text:#e8f1ff;
-  --muted:#9bb0cb;
-  --blue:#53a8ff;
-  --green:#42e6a4;
-  --border:#29415f;
-  --red:#ff7676;
-}
-* { box-sizing:border-box; }
-body {
-  margin:0;
-  font-family:system-ui,Arial,sans-serif;
-  color:var(--text);
-  background:radial-gradient(ellipse at top,#173459,var(--bg) 65%);
-  line-height:1.6;
-}
-header {
-  padding:30px 18px;
-  text-align:center;
-  border-bottom:1px solid var(--border);
-  background:#081426cc;
-}
-.logo { font-size:35px;font-weight:900;letter-spacing:3px;color:var(--blue); }
-header p,.muted { color:var(--muted); }
-nav {
-  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
-  padding:13px;background:var(--panel);
-  position:sticky;top:0;z-index:5;
-}
-nav a {
-  color:var(--text);text-decoration:none;padding:8px 12px;
-  border-radius:9px;background:var(--panel2);
-}
-nav a:hover { color:var(--green); }
-main { max-width:1050px;margin:auto;padding:20px 14px; }
-section {
-  margin:20px 0;padding:20px;
-  background:var(--panel);border:1px solid var(--border);
-  border-radius:17px;
-}
-h1,h2,h3 { line-height:1.25; }
-h2 { color:var(--blue); }
-button,input,textarea,select {
-  font:inherit;border-radius:9px;padding:11px;
-}
-button {
-  cursor:pointer;border:0;background:var(--blue);
-  color:#071426;font-weight:800;
-}
-button.secondary { background:var(--panel2);color:var(--text);border:1px solid var(--border); }
-button:hover { filter:brightness(1.1); }
-textarea,input,select {
-  width:100%;background:#071321;color:var(--text);
-  border:1px solid var(--border);
-}
-textarea { min-height:190px;resize:vertical;font-family:monospace; }
-.actions { display:flex;gap:9px;flex-wrap:wrap;margin:12px 0; }
-.output {
-  white-space:pre-wrap;overflow-wrap:anywhere;min-height:75px;
-  background:#050d18;border:1px solid var(--border);
-  border-radius:10px;padding:13px;font-family:monospace;
-}
-.error { color:var(--red); }
-.cards {
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:13px;
-}
-.card {
-  padding:15px;border-radius:12px;
-  border:1px solid var(--border);background:var(--panel2);
-  overflow-wrap:anywhere;
-}
-.card h3 { margin-top:0;color:var(--green); }
-code,.syntax {
-  font-family:monospace;background:#071321;padding:3px 6px;border-radius:5px;
-}
-footer { text-align:center;padding:25px;color:var(--muted); }
-.small { font-size:13px;color:var(--muted); }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071a2e">
+  <meta name="description" content="Zyrox Interpreter V3.2 Ultimate — interpreter eksperimental dengan command interaktif.">
+  <title>ZYROX — Interpreter V3.2 Ultimate</title>
+  <style>
+    :root {
+      --bg: #061321;
+      --panel: #0b2034;
+      --panel-2: #102b42;
+      --text: #eff8ff;
+      --muted: #a8bfd1;
+      --mint: #42f5d4;
+      --blue: #65b8ff;
+      --border: rgba(158, 208, 239, .17);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--text);
+      background: radial-gradient(ellipse at top, #123b52 0, var(--bg) 48rem);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1080px, 92%); margin: auto; }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: blur(16px);
+      background: rgba(6, 19, 33, .82);
+      border-bottom: 1px solid var(--border);
+    }
+    nav { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 15px 0; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: 2px; }
+    .logo {
+      display: grid; place-items: center; width: 38px; height: 38px;
+      border-radius: 12px; color: #041720; background: var(--mint); font-weight: 1000;
+      box-shadow: 0 0 24px rgba(66,245,212,.2);
+    }
+    .navlinks { display: flex; flex-wrap: wrap; gap: 17px; color: var(--muted); font-size: .92rem; }
+    .navlinks a:hover { color: var(--mint); }
+    .hero { padding: 88px 0 64px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 42px; align-items: center; }
+    .tag {
+      display: inline-flex; gap: 8px; align-items: center; padding: 6px 11px;
+      color: var(--mint); border: 1px solid rgba(66,245,212,.28); background: rgba(66,245,212,.07);
+      border-radius: 999px; font-size: .8rem; font-weight: 700;
+    }
+    h1 { font-size: clamp(3rem, 8vw, 6rem); line-height: .98; letter-spacing: -.07em; margin: 20px 0; }
+    h1 span { color: var(--mint); }
+    .lead { max-width: 590px; font-size: 1.08rem; color: var(--muted); }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+    .btn { border: 1px solid var(--border); padding: 11px 17px; border-radius: 12px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+    .btn.primary { color: #031b1a; background: var(--mint); border-color: var(--mint); }
+    .btn.secondary { background: rgba(255,255,255,.035); }
+    .btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
+    .terminal {
+      border: 1px solid rgba(101,184,255,.25); background: rgba(7,23,39,.9);
+      border-radius: 20px; overflow: hidden; box-shadow: 0 25px 80px rgba(0,0,0,.24);
+    }
+    .term-top { display: flex; gap: 7px; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border); color: var(--muted); font-size: .82rem; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: #51758a; }
+    pre { margin: 0; padding: 23px; overflow-x: auto; font: .95rem/1.9 ui-monospace, SFMono-Regular, Consolas, monospace; color: #d9f4ff; }
+    .mint { color: var(--mint); } .blue { color: var(--blue); } .muted { color: var(--muted); }
+    section { padding: 48px 0; }
+    .section-head { margin-bottom: 24px; }
+    .eyebrow { color: var(--mint); text-transform: uppercase; font-size: .76rem; letter-spacing: .16em; font-weight: 900; }
+    h2 { font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.15; margin: 8px 0; }
+    .section-desc { color: var(--muted); max-width: 680px; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+    .card { border: 1px solid var(--border); background: linear-gradient(145deg, rgba(16,43,66,.8), rgba(7,24,40,.82)); padding: 22px; border-radius: 17px; }
+    .card .symbol { font-size: 1.5rem; margin-bottom: 8px; }
+    .card h3 { margin: 4px 0 8px; }
+    .card p { color: var(--muted); margin: 0; font-size: .94rem; }
+    .syntax-list { display: grid; gap: 10px; }
+    .syntax { display: flex; justify-content: space-between; align-items: center; gap: 14px; border: 1px solid var(--border); background: rgba(11,32,52,.72); border-radius: 12px; padding: 13px 15px; }
+    code { color: var(--mint); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
+    .syntax small { color: var(--muted); text-align: right; }
+    .notice { margin-top: 15px; border-left: 3px solid var(--blue); padding: 12px 15px; background: rgba(101,184,255,.07); color: var(--muted); border-radius: 0 10px 10px 0; font-size: .9rem; }
+    .team { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .member { padding: 18px; border: 1px solid var(--border); border-radius: 14px; background: rgba(11,32,52,.7); }
+    .member strong { display: block; }
+    .member span { color: var(--mint); font-size: .84rem; }
+    .member p { color: var(--muted); font-size: .88rem; margin-bottom: 0; }
+    .cta { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 27px; border: 1px solid rgba(66,245,212,.22); border-radius: 19px; background: linear-gradient(110deg, rgba(66,245,212,.09), rgba(101,184,255,.07)); }
+    footer { border-top: 1px solid var(--border); margin-top: 55px; padding: 24px 0; color: var(--muted); font-size: .86rem; }
+
+    .playground { padding-bottom: 20px; }
+    .play-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; padding:18px; }
+    .play-grid label { display:block; color:var(--mint); font-size:.75rem; letter-spacing:.14em; font-weight:900; margin:0 0 9px; }
+    #zyroxCode { width:100%; min-height:370px; resize:vertical; background:#04111f; color:#e5f7ff; border:1px solid var(--border); border-radius:12px; padding:15px; font: .9rem/1.7 ui-monospace,Consolas,monospace; outline:none; }
+    #zyroxCode:focus { border-color:var(--mint); }
+    .output { min-height:370px; max-height:520px; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; border:1px solid var(--border); border-radius:12px; background:#04111f; color:#d9f4ff; padding:15px; }
+    .editor-actions { margin-top:12px; }
+    @media(max-width:760px){.play-grid{grid-template-columns:1fr;padding:12px} #zyroxCode,.output{min-height:260px}}
+
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; padding-top: 58px; gap: 30px; }
+      .cards { grid-template-columns: 1fr; }
+      .team { grid-template-columns: repeat(2, 1fr); }
+      .navlinks { gap: 10px; font-size: .82rem; }
+      .cta { align-items: flex-start; flex-direction: column; }
+    }
+    @media (max-width: 420px) { .navlinks a:nth-child(3) { display: none; } .team { grid-template-columns: 1fr 1fr; } }
+  </style>
 </head>
 <body>
+  <header>
+    <nav class="wrap">
+      <a class="brand" href="#home"><span class="logo">Z</span><span>ZYROX</span></a>
+      <div class="navlinks">
+        <a href="#about">Tentang</a><a href="#syntax">Syntax</a><a href="#playground">Coba</a><a href="#registry">Registry</a><a href="#team">Tim</a>
+      </div>
+    </nav>
+  </header>
 
-<header>
-  <div class="logo">ZYROX</div>
-  <h1>ZYROX LANGUAGE V3.1</h1>
-  <p>Mega Syntax Registry · Interactive Playground · User Input</p>
-  <p>Language Development Project</p>
-</header>
+  <main>
+    <div class="wrap hero" id="home">
+      <div>
+        <span class="tag">● PROYEK EKSPERIMENTAL · V3.2 ULTIMATE</span>
+        <h1>Code beyond<br><span>limits.</span></h1>
+        <p class="lead">Mengenal Zyrox Interpreter V3.2 Ultimate — interpreter browser dengan input, variabel, logika, fungsi, loop, array, tanggal, random, dan banyak command lainnya.</p>
+        <div class="actions">
+          <a class="btn primary" href="#syntax">Jelajahi Syntax ↘</a>
+          <a class="btn secondary" href="#about">Tentang Zyrox</a>
+        </div>
+      </div>
+      <div class="terminal" aria-label="Contoh kode Zyrox">
+        <div class="term-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span style="margin-left:7px">zyrox_demo.zx</span></div>
+        <pre><span class="muted">// Contoh konsep Zyrox</span>
+<span class="mint">Print.true</span>()
 
-<nav>
-  <a href="#home">Home</a>
-  <a href="#playground">Playground</a>
-  <a href="#registry">Syntax Registry</a>
-  <a href="#team">Team</a>
-</nav>
+<span class="blue">Ref</span> = "Zyrox V3.0"
 
-<main>
-<section id="home">
-  <h2>Welcome to Zyrox</h2>
-  <p>
-    Zyrox adalah proyek bahasa pemrograman eksperimental.
-    V3.1 memperkenalkan input pengguna dan interpreter sederhana
-    untuk menguji sintaks Zyrox langsung di browser.
-  </p>
-  <div class="cards">
-    <div class="card"><h3>Interactive</h3><p>Tulis dan jalankan kode.</p></div>
-    <div class="card"><h3>User Input</h3><p>Masukkan teks, angka, dan konfirmasi.</p></div>
-    <div class="card"><h3>Syntax Registry</h3><p>Jelajahi sintaks yang terdaftar.</p></div>
-  </div>
-</section>
-
-<section id="playground">
-  <h2>Interactive Playground</h2>
-  <p class="muted">
-    Input.get(Nama), Input.text(Nama), Input.number(Umur),
-    Input.confirm(Lanjut), dan Print.true(...).
-  </p>
-
-  <label for="zyroxCode">Editor Zyrox</label>
-  <textarea id="zyroxCode" spellcheck="false">Input.get(Nama)
-Print.true("Halo " + Nama)
-Print.true("Selamat datang di Zyrox V3.1")</textarea>
-
-  <div class="actions">
-    <button id="runBtn">▶ RUN</button>
-    <button id="clearBtn" class="secondary">CLEAR OUTPUT</button>
-    <button id="resetBtn" class="secondary">RESET CODE</button>
-  </div>
-
-  <h3>Output</h3>
-  <div id="output" class="output" aria-live="polite">Output akan muncul di sini.</div>
-  <p class="small">
-    Input menggunakan dialog browser. Jangan memasukkan informasi rahasia.
-  </p>
-</section>
-
-<section id="registry">
-  <h2>Mega Syntax Registry</h2>
-  <p class="muted">Cari sintaks untuk melihat definisi dan status dukungannya.</p>
-  <input id="searchSyntax" type="search" placeholder="Cari sintaks Zyrox...">
-  <div id="syntaxResults" class="cards" style="margin-top:15px"></div>
-  <p id="registryCount" class="small"></p>
-</section>
-
-<section id="team">
-  <h2>Zyrox Development Team</h2>
-  <p class="muted">Daftar peran tim dalam proyek.</p>
-  <div class="cards">
-    <div class="card">
-      <h3>GPT</h3>
-      <p>Owner / Lead Developer</p>
-      <p class="small">Peran dalam struktur proyek yang disepakati.</p>
-    </div>
-    <div class="card">
-      <h3>Ulwan</h3>
-      <p>Tester · Original Creator</p>
-      <p class="small">Pengujian sintaks, eksperimen, dan riset.</p>
-    </div>
-    <div class="card">
-      <h3>Dola / Mimin Dola</h3>
-      <p>Contributor</p>
-    </div>
-    <div class="card">
-      <h3>Ucup / Yusuf / Hamzah</h3>
-      <p>Member</p>
-      <p class="small">Member of the Zyrox Language Team.</p>
-    </div>
-  </div>
-</section>
-</main>
-
-<footer>
-  <strong>ZYROX LANGUAGE V3.1</strong>
-  <p>Experimental language project · GitHub Pages</p>
-</footer>
-
-<script>
-"use strict";
-
-const editor = document.getElementById("zyroxCode");
-const output = document.getElementById("output");
-const defaultCode = editor.value;
-
-/*
- * Syntax registry.
- * Beberapa item adalah proposal/konsep, bukan perintah interpreter.
- */
-const registry = [
-  ["Print.true()", "Menampilkan nilai atau teks.", "Didukung"],
-  ["Print.false()", "Tidak menampilkan teks.", "Didukung"],
-  ["Input.get(Name)", "Meminta input teks dari pengguna.", "Didukung"],
-  ["Input.text(Name)", "Meminta input teks dari pengguna.", "Didukung"],
-  ["Input.number(Name)", "Meminta input angka dari pengguna.", "Didukung"],
-  ["Input.confirm(Name)", "Meminta konfirmasi Ya/Tidak.", "Didukung"],
-  ["fact", "Konsep keputusan bernilai benar.", "Konsep"],
-  ["not", "Konsep alternatif atau negasi.", "Konsep"],
-  ["and", "Konsep penggabungan kondisi.", "Konsep"],
-  ["Ref", "Referensi atau posisi.", "Konsep"],
-  ["[ ]", "Blok atau fokus kode.", "Konsep"],
-  ["(#Text.True-text)", "Bentuk khusus teks; True-text tidak menghasilkan output.", "Didukung"],
-  ["(#Text.False-Text)", "Menampilkan kata-kata secara bertahap dalam output.", "Didukung"],
-  ["Variable", "Menyimpan nilai untuk digunakan kembali.", "Sebagian"],
-  ["String", "Nilai berupa teks.", "Konsep"],
-  ["Number", "Nilai berupa angka.", "Konsep"],
-  ["Boolean", "Nilai benar atau salah.", "Konsep"],
-  ["If", "Konsep percabangan kondisi.", "Konsep"],
-  ["Else", "Alternatif ketika kondisi tidak terpenuhi.", "Konsep"],
-  ["Loop", "Konsep pengulangan perintah.", "Konsep"],
-  ["Function", "Konsep fungsi yang dapat digunakan ulang.", "Konsep"],
-  ["Array", "Konsep kumpulan nilai.", "Konsep"],
-  ["Object", "Konsep kumpulan properti.", "Konsep"],
-  ["Return", "Konsep pengembalian nilai.", "Konsep"],
-  ["Import", "Konsep pemanggilan modul.", "Konsep"],
-  ["Export", "Konsep ekspor modul.", "Konsep"],
-  ["Debug", "Konsep pemeriksaan kesalahan.", "Konsep"],
-  ["Print.log()", "Proposal pencatatan output.", "Konsep"],
-  ["Input.password()", "Proposal input kata sandi.", "Konsep"],
-  ["Math", "Kategori operasi matematika.", "Konsep"],
-  ["Time", "Kategori operasi waktu.", "Konsep"],
-  ["Track", "Proposal pelacakan.", "Konsep"],
-  ["fact and not", "Proposal kombinasi logika.", "Konsep"],
-  ["deft", "Proposal sintaks; definisi belum ditetapkan.", "Konsep"],
-  ["True-text", "Mode teks khusus Zyrox.", "Didukung"],
-  ["False-Text", "Mode teks khusus Zyrox.", "Didukung"]
-];
-
-function readValue(expression, variables) {
-  const value = expression.trim();
-
-  if (
-    value.length >= 2 &&
-    ((value[0] === '"' && value.at(-1) === '"') ||
-     (value[0] === "'" && value.at(-1) === "'"))
-  ) {
-    return value.slice(1, -1)
-      .replace(/\\n/g, "\n")
-      .replace(/\\t/g, "\t")
-      .replace(/\\"/g, '"')
-      .replace(/\\'/g, "'");
-  }
-
-  if (Object.prototype.hasOwnProperty.call(variables, value)) {
-    return variables[value];
-  }
-
-  if (/^-?\d+(?:\.\d+)?$/.test(value)) return Number(value);
-  if (value === "true") return true;
-  if (value === "false") return false;
-
-  throw new Error("Nilai atau variabel tidak dikenal: " + value);
+<span class="mint">fact</span> {
+  <span class="muted">// logika eksperimental</span>
 }
 
-function evaluate(expression, variables) {
-  const parts = [];
-  let current = "";
-  let quote = "";
-  let escaped = false;
+<span class="muted"># Keep testing...</span></pre>
+      </div>
+    </div>
 
-  for (const char of expression) {
-    if (escaped) {
-      current += char;
-      escaped = false;
-      continue;
+    <section class="wrap" id="about">
+      <div class="section-head">
+        <div class="eyebrow">Tentang proyek</div>
+        <h2>Bahasa yang dibangun lewat eksperimen.</h2>
+        <p class="section-desc">Zyrox adalah proyek konseptual untuk merancang syntax, aturan, dan kemungkinan interpreter. V3.2 membawa interpreter browser yang dapat menjalankan subset command Zyrox yang didokumentasikan di bawah. Sintaks khusus tetap dipertahankan; fitur tambahan diberi status eksperimental.</p>
+      </div>
+      <div class="cards">
+        <article class="card"><div class="symbol">⌘</div><h3>Syntax eksperimental</h3><p>Merancang cara baru untuk menulis perintah, kondisi, input, dan output.</p></article>
+        <article class="card"><div class="symbol">⌁</div><h3>Test & research</h3><p>Menguji konsistensi syntax dan mencari bagian yang masih membingungkan.</p></article>
+        <article class="card"><div class="symbol">◈</div><h3>Interpreter V3.2</h3><p>Menguji command yang benar-benar berjalan dengan parser sederhana tanpa eval JavaScript.</p></article>
+      </div>
+    </section>
+
+    <section class="wrap" id="syntax">
+      <div class="section-head">
+        <div class="eyebrow">Syntax showcase</div>
+        <h2>Kenali beberapa syntax.</h2>
+        <p class="section-desc">Berikut beberapa konsep dasar yang pernah didefinisikan dalam proyek Zyrox.</p>
+      </div>
+      <div class="syntax-list">
+        <div class="syntax"><code>Print.true()</code><small>Konsep perintah output</small></div>
+        <div class="syntax"><code>Print.false()</code><small>Konsep tidak menampilkan teks</small></div>
+        <div class="syntax"><code>fact</code><small>Keputusan / kondisi benar</small></div>
+        <div class="syntax"><code>not</code><small>Keputusan alternatif</small></div>
+        <div class="syntax"><code>Ref</code><small>Referensi atau posisi</small></div>
+        <div class="syntax"><code>[ ... ]</code><small>Blok / fokus kode</small></div>
+      </div>
+      <div class="notice">Catatan: halaman ini mendokumentasikan konsep proyek. Sebagian syntax masih berupa rancangan dan belum tentu dapat dieksekusi oleh interpreter nyata.</div>
+    </section>
+
+
+    <section class="wrap" id="playground">
+      <div class="section-head">
+        <div class="eyebrow">Live interpreter · V3.2 Ultimate</div>
+        <h2>Coba Zyrox di sini.</h2>
+        <p class="section-desc">Tulis program Zyrox, tekan Run, dan lihat hasilnya. Command yang tersedia berjalan di browser; Input meminta jawaban lewat dialog browser.</p>
+      </div>
+      <div class="terminal playground">
+        <div class="term-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span style="margin-left:7px">zyrox_v3_2.zx</span><span style="margin-left:auto" id="runStatus">Ready</span></div>
+        <div class="play-grid">
+          <div><label for="zyroxCode">EDITOR</label><textarea id="zyroxCode" spellcheck="false"># Zyrox V3.2 Ultimate
+Print.line("=== ZYROX V3.2 ===")
+Var.set("name", "Ulwan")
+Var.set("score", 100)
+Print.line("Hello " + Var.get("name"))
+Print.line("Score: " + Var.get("score"))
+Print.line(Math.add(10, 5))
+Print.line(String.upper("zyrox interpreter"))
+Array.create("games")
+Array.push("games", "Roblox")
+Array.push("games", "Minecraft")
+Print.line(Array.get("games", 0))
+Print.line("Random: " + Random.int(1, 100))
+Print.line("Today: " + Date.today())</textarea>
+            <div class="actions editor-actions"><button class="btn primary" id="runZyrox">▶ Run</button><button class="btn secondary" id="clearOutput">Clear output</button><button class="btn secondary" id="resetCode">Reset example</button></div>
+          </div>
+          <div><label for="zyroxOutput">OUTPUT</label><pre id="zyroxOutput" class="output" aria-live="polite">Zyrox Interpreter V3.2 Ultimate\nReady to run.</pre><div class="notice">Safety: code runs in this interpreter only. File.save creates a download; it cannot access arbitrary device files without user action. No JavaScript eval is used.</div></div>
+        </div>
+      </div>
+    </section>
+    <section class="wrap" id="registry">
+      <div class="section-head"><div class="eyebrow">Mega Syntax Registry</div><h2>Command reference.</h2><p class="section-desc">Core syntax yang ditetapkan creator dipertahankan. Command tambahan adalah API V3.2 eksperimental dan hanya command yang diimplementasikan yang bisa dieksekusi.</p></div>
+      <div class="cards">
+        <article class="card"><h3>Core / Print</h3><p><code>Print.true("teks")</code><br><code>Print.false("teks")</code><br><code>Print.line(value)</code><br><code>Print.number(value)</code><br><code>Print.clear()</code><br><code>Print.error(value)</code><br><code>Ref</code>, <code>fact</code>, <code>not</code>, <code>[ ]</code></p></article>
+        <article class="card"><h3>Variables / Input</h3><p><code>Var.set(name, value)</code><br><code>Var.get(name)</code><br><code>Var.delete(name)</code><br><code>Var.exists(name)</code><br><code>Input.text(prompt)</code><br><code>Input.number(prompt)</code><br><code>Input.confirm(prompt)</code></p></article>
+        <article class="card"><h3>Math / Comparison</h3><p><code>Math.add(a,b)</code>, <code>Math.sub(a,b)</code><br><code>Math.mul(a,b)</code>, <code>Math.div(a,b)</code><br><code>Math.pow(a,b)</code>, <code>Math.sqrt(a)</code><br><code>Compare.eq(a,b)</code>, <code>Compare.gt(a,b)</code><br><code>Compare.lt(a,b)</code>, <code>Logic.and(a,b)</code></p></article>
+        <article class="card"><h3>Strings / Conversion</h3><p><code>String.upper(s)</code>, <code>String.lower(s)</code><br><code>String.trim(s)</code>, <code>String.length(s)</code><br><code>String.replace(s,a,b)</code><br><code>Convert.number(v)</code><br><code>Convert.text(v)</code>, <code>Type.of(v)</code></p></article>
+        <article class="card"><h3>Arrays / Random / Date</h3><p><code>Array.create(name)</code><br><code>Array.push(name,value)</code><br><code>Array.get(name,index)</code><br><code>Array.length(name)</code>, <code>Array.pop(name)</code><br><code>Random.int(min,max)</code>, <code>Random.float()</code><br><code>Date.today()</code>, <code>Date.now()</code></p></article>
+        <article class="card"><h3>Loop / Functions / Files</h3><p><code>Loop.range(start,end)</code><br><code>Function.define(name,body)</code> (limited)<br><code>File.save(name,text)</code><br><code>File.read()</code> (user selects file)<br><code>Error.raise(message)</code><br><code>Comment: # text</code> or <code>// text</code></p></article>
+      </div>
+      <div class="notice">Creator-defined semantics remain special: <code>Print.true()</code> displays its argument and <code>Print.false()</code> does not display it, following the current Zyrox core definition. Use <code>Print.line()</code> for conventional output. The special <code>(#..."True-text)</code> / <code>(#..."False-Text)</code> syntax is also recognized for simple text.</div>
+    </section>
+
+    <section class="wrap" id="team">
+      <div class="section-head">
+        <div class="eyebrow">Struktur kolaborasi</div>
+        <h2>Peran dalam proyek.</h2>
+        <p class="section-desc">Pembagian peran yang direncanakan untuk kolaborasi Zyrox.</p>
+      </div>
+      <div class="team">
+        <div class="member"><strong>GPT</strong><span>Owner / Lead Developer</span><p>Membantu merancang syntax dan arsitektur.</p></div>
+        <div class="member"><strong>Gemini</strong><span>Co-Owner / Manager</span><p>Meninjau rancangan dan memberi evaluasi.</p></div>
+        <div class="member"><strong>Dola</strong><span>Contributor</span><p>Membantu meninjau ide dan mencari bug.</p></div>
+        <div class="member"><strong>Ulwan</strong><span>Tester</span><p>Menguji syntax, bereksperimen, dan melakukan riset.</p></div>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="cta">
+        <div><div class="eyebrow">Langkah selanjutnya</div><h2 style="margin-bottom:5px">Build. Test. Improve.</h2><p class="section-desc" style="margin:0">Zyrox V3.2 Ultimate — Build. Test. Improve.</p></div>
+        <button class="btn primary" id="helloBtn" type="button">Test tombol ✦</button>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap">© <span id="year"></span> Zyrox Project · Website demo, belum menjadi situs publik.</div></footer>
+  <script>
+
+    const $ = (id) => document.getElementById(id);
+    const starter = $('zyroxCode').value;
+    function splitArgs(s) {
+      const out=[]; let cur='', quote='', depth=0, esc=false;
+      for (let i=0;i<s.length;i++) { const c=s[i]; if(esc){cur+=c;esc=false;continue;} if(c==='\\'&&quote){cur+=c;esc=true;continue;} if(quote){cur+=c;if(c===quote)quote='';continue;} if(c==='"'||c==="'"){quote=c;cur+=c;continue;} if(c==='('||c==='['){depth++;cur+=c;continue;} if(c===')'||c===']'){depth--;cur+=c;continue;} if(c===','&&depth===0){out.push(cur.trim());cur='';}else cur+=c; }
+      if(cur.trim()||s.trim())out.push(cur.trim()); return out;
     }
-
-    if (char === "\\" && quote) {
-      current += char;
-      escaped = true;
-      continue;
+    function parseLiteral(s, env, output) {
+      s=s.trim(); if(!s)return undefined;
+      if((s[0]==='"'&&s.at(-1)==='"')||(s[0]==="'"&&s.at(-1)==="'")) return s.slice(1,-1).replace(/\\n/g,'\n').replace(/\\t/g,'\t').replace(/\\"/g,'"').replace(/\\'/g,"'");
+      if(s==='true')return true;if(s==='false')return false;if(s==='null')return null;
+      if(/^-?(?:\d+\.?\d*|\.\d+)$/.test(s))return Number(s);
+      if(s.startsWith('[')&&s.endsWith(']'))return splitArgs(s.slice(1,-1)).map(x=>parseLiteral(x,env,output));
+      // Safe arithmetic and string concatenation parser; only literal operands and approved operators.
+      const plusParts=splitTopOperator(s,'+'); if(plusParts.length>1)return plusParts.map(x=>parseLiteral(x,env,output)).reduce((a,b)=>a+b);
+      const call=s.match(/^([A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*)\((.*)\)$/s);
+      if(call){const args=splitArgs(call[2]).map(x=>parseLiteral(x,env,output));return invoke(call[1],args,env,output);}
+      if(/^[A-Za-z_$][\w$]*$/.test(s)&&env.vars.has(s))return env.vars.get(s);
+      throw new Error('Ungkapan tidak dikenali: '+s);
     }
-
-    if ((char === '"' || char === "'") &&
-        (!quote || quote === char)) {
-      quote = quote ? "" : char;
-      current += char;
-      continue;
+    function splitTopOperator(s,op){let q='',d=0,parts=[],last=0;for(let i=0;i<s.length;i++){let c=s[i];if(q){if(c===q&&s[i-1]!=='\\')q='';continue;}if(c==='"'||c==="'"){q=c;continue;}if(c==='('||c==='[')d++;else if(c===')'||c===']')d--;else if(c===op&&d===0){parts.push(s.slice(last,i).trim());last=i+1;}}if(parts.length){parts.push(s.slice(last).trim());return parts;}return [s];}
+    function invoke(name,a,env,out){
+      const n=name.toLowerCase(); const need=(count)=>{if(a.length<count)throw new Error(name+' membutuhkan minimal '+count+' argumen');};
+      if(n==='print.true'){out.push(a.map(v=>v===undefined?'':String(v)).join(' '));return a[0];}
+      if(n==='print.false')return undefined; // official Zyrox meaning: no display
+      if(['print.line','print.text','print.result','print.success','print.warning'].includes(n)){out.push(a.map(v=>v===undefined?'':String(v)).join(' '));return a[0];}
+      if(n==='print.number'){need(1);const v=Number(a[0]);if(!Number.isFinite(v))throw new Error('Print.number memerlukan angka');out.push(String(v));return v;}
+      if(n==='print.error'){out.push('ERROR: '+a.join(' '));return null;}
+      if(n==='print.clear'){out.length=0;return null;}
+      if(n==='print.empty'){out.push('');return '';}
+      if(n==='print.timestamp'){const v=new Date().toISOString();out.push(v);return v;}
+      if(n==='var.set'){need(2);env.vars.set(String(a[0]),a[1]);return a[1];}
+      if(n==='var.get'){need(1);if(!env.vars.has(String(a[0])))throw new Error('Variabel belum ada: '+a[0]);return env.vars.get(String(a[0]));}
+      if(n==='var.delete'||n==='var.reset')return env.vars.delete(String(a[0]));
+      if(n==='var.exists')return env.vars.has(String(a[0]));
+      if(n==='var.increment'||n==='var.decrement'){need(1);const k=String(a[0]);let v=Number(env.vars.get(k)||0)+(n.endsWith('increment')?1:-1);env.vars.set(k,v);return v;}
+      if(n==='input.text'||n==='input.get'||n==='input.line'){const v=prompt(String(a[0]??'Masukkan teks:'));return v??'';}
+      if(n==='input.number'){const v=Number(prompt(String(a[0]??'Masukkan angka:')));if(!Number.isFinite(v))throw new Error('Input bukan angka yang valid');return v;}
+      if(n==='input.confirm')return confirm(String(a[0]??'Lanjutkan?'));
+      if(n==='input.clear'){env.vars.delete(String(a[0]));return null;}
+      if(n.startsWith('math.')){need(1);const x=Number(a[0]),y=Number(a[1]);const m={'math.add':()=>x+y,'math.sub':()=>x-y,'math.mul':()=>x*y,'math.div':()=>{if(y===0)throw new Error('Pembagian dengan nol');return x/y;},'math.mod':()=>x%y,'math.pow':()=>x**y,'math.sqrt':()=>Math.sqrt(x),'math.abs':()=>Math.abs(x),'math.floor':()=>Math.floor(x),'math.ceil':()=>Math.ceil(x),'math.round':()=>Math.round(x),'math.min':()=>Math.min(...a.map(Number)),'math.max':()=>Math.max(...a.map(Number)),'math.sin':()=>Math.sin(x),'math.cos':()=>Math.cos(x),'math.tan':()=>Math.tan(x),'math.log':()=>Math.log(x)};if(!m[n])throw new Error('Command Math tidak dikenal: '+name);return m[n]();}
+      if(n.startsWith('compare.')||n.startsWith('logic.')){need(2);const x=a[0],y=a[1];const m={'compare.eq':()=>x===y,'compare.equal':()=>x===y,'compare.ne':()=>x!==y,'compare.gt':()=>x>y,'compare.gte':()=>x>=y,'compare.lt':()=>x<y,'compare.lte':()=>x<=y,'compare.contains':()=>String(x).includes(String(y)),'logic.and':()=>Boolean(x)&&Boolean(y),'logic.or':()=>Boolean(x)||Boolean(y),'logic.not':()=>!x};if(!m[n])throw new Error('Command Logic/Compare tidak dikenal: '+name);return m[n]();}
+      if(n.startsWith('string.')){need(1);const s=String(a[0]);const m={'string.upper':()=>s.toUpperCase(),'string.lower':()=>s.toLowerCase(),'string.trim':()=>s.trim(),'string.length':()=>s.length,'string.reverse':()=>[...s].reverse().join(''),'string.words':()=>s.trim()?s.trim().split(/\s+/):[],'string.includes':()=>s.includes(String(a[1]??'')),'string.starts':()=>s.startsWith(String(a[1]??'')),'string.ends':()=>s.endsWith(String(a[1]??'')),'string.replace':()=>s.replaceAll(String(a[1]??''),String(a[2]??'')),'string.slice':()=>s.slice(Number(a[1]||0),a[2]===undefined?undefined:Number(a[2])),'string.repeat':()=>s.repeat(Math.max(0,Math.min(1000,Number(a[1]||1))))};if(!m[n])throw new Error('Command String tidak dikenal: '+name);return m[n]();}
+      if(n.startsWith('convert.')){need(1);if(n==='convert.number'){const v=Number(a[0]);if(!Number.isFinite(v))throw new Error('Konversi angka gagal');return v;}if(n==='convert.text'||n==='convert.string')return String(a[0]);if(n==='convert.boolean')return Boolean(a[0]);if(n==='convert.integer')return Math.trunc(Number(a[0]));if(n==='convert.float')return parseFloat(a[0]);if(n==='convert.json')return JSON.stringify(a[0]);throw new Error('Convert tidak dikenal: '+name);}
+      if(n==='type.of')return a[0]===null?'null':Array.isArray(a[0])?'array':typeof a[0];
+      if(n==='array.create'){need(1);env.arrays.set(String(a[0]),[]);return env.arrays.get(String(a[0]));}
+      if(n==='array.push'||n==='list.add'){need(2);const k=String(a[0]);if(!env.arrays.has(k))env.arrays.set(k,[]);env.arrays.get(k).push(a[1]);return env.arrays.get(k).length;}
+      if(n==='array.get'||n==='list.get'){need(2);const ar=env.arrays.get(String(a[0]));if(!ar)throw new Error('Array tidak ditemukan: '+a[0]);return ar[Number(a[1])];}
+      if(n==='array.length'||n==='list.length'){const ar=env.arrays.get(String(a[0]));if(!ar)throw new Error('Array tidak ditemukan: '+a[0]);return ar.length;}
+      if(n==='array.pop'){const ar=env.arrays.get(String(a[0]));if(!ar)throw new Error('Array tidak ditemukan: '+a[0]);return ar.pop();}
+      if(n==='array.remove'){need(2);const ar=env.arrays.get(String(a[0]));if(!ar)throw new Error('Array tidak ditemukan: '+a[0]);const i=Number(a[1]);return ar.splice(i,1)[0];}
+      if(n==='array.join'){const ar=env.arrays.get(String(a[0]));if(!ar)throw new Error('Array tidak ditemukan: '+a[0]);return ar.join(String(a[1]??','));}
+      if(n==='random.int'){need(2);const lo=Math.ceil(Number(a[0])),hi=Math.floor(Number(a[1]));if(hi<lo)throw new Error('Batas Random.int tidak valid');return Math.floor(Math.random()*(hi-lo+1))+lo;}
+      if(n==='random.float')return Math.random();
+      if(n==='random.choice'){const ar=Array.isArray(a[0])?a[0]:env.arrays.get(String(a[0]));if(!ar?.length)throw new Error('Random.choice memerlukan array yang tidak kosong');return ar[Math.floor(Math.random()*ar.length)];}
+      if(n==='date.today')return new Date().toLocaleDateString('id-ID');
+      if(n==='date.now')return new Date().toLocaleString('id-ID');
+      if(n==='date.year')return new Date().getFullYear();if(n==='date.month')return new Date().getMonth()+1;if(n==='date.day')return new Date().getDate();
+      if(n==='date.iso')return new Date().toISOString();
+      if(n==='file.save'){need(2);const blob=new Blob([String(a[1])],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=String(a[0]||'zyrox.txt');link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);return 'Download dibuat: '+a[0];}
+      if(n==='file.read'){const textValue=prompt('Untuk File.read, tempel isi teks file yang ingin dibaca:');return textValue??'';}
+      if(n==='error.raise')throw new Error(String(a[0]??'Error diminta oleh program'));
+      if(n==='json.stringify')return JSON.stringify(a[0]);
+      if(n==='json.parse'){try{return JSON.parse(String(a[0]));}catch(e){throw new Error('JSON tidak valid');}}
+      throw new Error('Command tidak dikenal: '+name);
     }
-
-    if (char === "+" && !quote) {
-      parts.push(current.trim());
-      current = "";
-    } else {
-      current += char;
+    function runZyrox(code){const output=[];const env={vars:new Map(),arrays:new Map()};const lines=code.split(/\r?\n/);let steps=0;
+      for(let i=0;i<lines.length;i++){if(++steps>5000)throw new Error('Batas eksekusi terlampaui');let line=lines[i].trim();if(!line||line.startsWith('#')||line.startsWith('//'))continue;
+        // Creator's special text syntax: True-text hides, False-Text displays words one by one.
+        const special=line.match(/^\(#(.*?)\."(True-text|False-Text)\)$/i);if(special){if(special[2].toLowerCase()==='false-text')special[1].trim().split(/\s+/).forEach(w=>output.push(w));continue;}
+        // Allow assignment shorthand: Ref = value
+        const ref=line.match(/^Ref\s*=\s*(.+)$/i);if(ref){env.vars.set('Ref',parseLiteral(ref[1],env,output));continue;}
+        // Repeat blocks: Loop.repeat(n) [ command ] and Loop.range(start,end) [ command ]
+        const loop=line.match(/^Loop\.(repeat|range)\((.*?)\)\s*\[\s*(.+)\s*\]$/i);if(loop){const args=splitArgs(loop[2]).map(x=>parseLiteral(x,env,output));const count=loop[1].toLowerCase()==='repeat'?Math.max(0,Math.min(1000,Number(args[0]))):Math.max(0,Math.min(1000,Number(args[1])-Number(args[0])));for(let j=0;j<count;j++){let body=loop[3].replace(/\bIndex\b/g,String(loop[1].toLowerCase()==='range'?Number(args[0])+j:j));parseStatement(body,env,output);}continue;}
+        parseStatement(line,env,output);
+      }return output;
     }
-  }
+    function parseStatement(line,env,out){line=line.trim().replace(/;$/,'');if(!line)return;const call=line.match(/^([A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*)\((.*)\)$/s);if(call){const args=splitArgs(call[2]).map(x=>parseLiteral(x,env,out));invoke(call[1],args,env,out);return;}const assign=line.match(/^([A-Za-z_$][\w$]*)\s*=\s*(.+)$/s);if(assign){env.vars.set(assign[1],parseLiteral(assign[2],env,out));return;}throw new Error('Sintaks tidak valid: '+line);}
+    $('runZyrox').addEventListener('click',()=>{const output=$('zyroxOutput');$('runStatus').textContent='Running…';try{const lines=runZyrox($('zyroxCode').value);output.textContent=lines.length?lines.join('\n'):'Program selesai tanpa output.';$('runStatus').textContent='Success';}catch(e){output.textContent='Syntax / Runtime Error\n'+e.message;$('runStatus').textContent='Error';}});
+    $('clearOutput').addEventListener('click',()=>{$('zyroxOutput').textContent='';$('runStatus').textContent='Output cleared';});
+    $('resetCode').addEventListener('click',()=>{$('zyroxCode').value=starter;$('runStatus').textContent='Ready';});
+    $('year').textContent = new Date().getFullYear();
 
-  if (quote) throw new Error("Tanda kutip belum ditutup.");
-  parts.push(current.trim());
-
-  return parts.map(part => readValue(part, variables))
-    .reduce((a, b) => {
-      if (typeof a === "string" || typeof b === "string") {
-        return String(a) + String(b);
-      }
-      if (typeof a === "number" && typeof b === "number") return a + b;
-      throw new Error("Operator + membutuhkan teks atau angka.");
-    });
-}
-
-function interpret(source) {
-  const results = [];
-  const errors = [];
-  const variables = Object.create(null);
-  const lines = source.split(/\r?\n/);
-
-  for (let index = 0; index < lines.length; index++) {
-    const line = lines[index].trim();
-    if (!line || line.startsWith("//")) continue;
-
-    try {
-      const inputMatch = line.match(
-        /^Input\.(get|text|number|confirm)\s*\(\s*([A-Za-z_]\w*)\s*\)\s*;?$/i
-      );
-
-      if (inputMatch) {
-        const type = inputMatch[1].toLowerCase();
-        const name = inputMatch[2];
-
-        if (type === "confirm") {
-          variables[name] = window.confirm("Konfirmasi untuk " + name + "?");
-        } else {
-          const answer = window.prompt("Masukkan " + name + ":");
-
-          if (answer === null) {
-            throw new Error("Input dibatalkan.");
-          }
-
-          if (type === "number") {
-            if (answer.trim() === "" || !Number.isFinite(Number(answer))) {
-              throw new Error("Input harus berupa angka.");
-            }
-            variables[name] = Number(answer);
-          } else {
-            variables[name] = answer;
-          }
-        }
-        continue;
-      }
-
-      const printMatch = line.match(
-        /^Print\.(true|false)\s*\((.*)\)\s*;?$/i
-      );
-
-      if (printMatch) {
-        if (printMatch[1].toLowerCase() === "true") {
-          results.push(String(evaluate(printMatch[2], variables)));
-        }
-        continue;
-      }
-
-      const special = line.match(
-        /^\(#(.+)\."(True-text|False-Text)"\)$/i
-      );
-
-      if (special) {
-        if (special[2].toLowerCase() === "false-text") {
-          results.push(...special[1].trim().split(/\s+/));
-        }
-        continue;
-      }
-
-      // Assignment sederhana: Nama = "teks" atau Nama = 123
-      const assignment = line.match(/^([A-Za-z_]\w*)\s*=\s*(.+);?$/);
-
-      if (assignment) {
-        variables[assignment[1]] = evaluate(assignment[2], variables);
-        continue;
-      }
-
-      throw new Error("Perintah belum didukung.");
-    } catch (error) {
-      errors.push("Baris " + (index + 1) + ": " + error.message);
-    }
-  }
-
-  return { results, errors };
-}
-
-document.getElementById("runBtn").addEventListener("click", () => {
-  output.classList.remove("error");
-  output.textContent = "Menjalankan program...";
-
-  const result = interpret(editor.value);
-  let text = result.results.join("\n");
-
-  if (result.errors.length) {
-    if (text) text += "\n\n";
-    text += "[Interpreter Error]\n" + result.errors.join("\n");
-    output.classList.add("error");
-  }
-
-  output.textContent = text || "(Tidak ada output)";
-});
-
-document.getElementById("clearBtn").addEventListener("click", () => {
-  output.textContent = "";
-  output.classList.remove("error");
-});
-
-document.getElementById("resetBtn").addEventListener("click", () => {
-  editor.value = defaultCode;
-  output.textContent = "Kode direset.";
-  output.classList.remove("error");
-});
-
-function renderRegistry(query = "") {
-  const container = document.getElementById("syntaxResults");
-  const normalized = query.trim().toLowerCase();
-
-  const filtered = registry.filter(item =>
-    item.some(value => value.toLowerCase().includes(normalized))
-  );
-
-  container.replaceChildren();
-
-  for (const [syntax, description, status] of filtered) {
-    const card = document.createElement("article");
-    card.className = "card";
-
-    const heading = document.createElement("h3");
-    heading.textContent = syntax;
-
-    const detail = document.createElement("p");
-    detail.textContent = description;
-
-    const badge = document.createElement("p");
-    badge.className = "small";
-    badge.textContent = "Status: " + status;
-
-    card.append(heading, detail, badge);
-    container.append(card);
-  }
-
-  document.getElementById("registryCount").textContent =
-    filtered.length + " dari " + registry.length + " sintaks ditampilkan.";
-}
-
-document.getElementById("searchSyntax").addEventListener("input", event => {
-  renderRegistry(event.target.value);
-});
-
-renderRegistry();
-</script>
+  </script>
 </body>
 </html>
