@@ -89,7 +89,7 @@ main{padding:10px 0 55px}
 .empty{grid-column:1/-1;color:var(--muted);padding:25px;text-align:center;border:1px dashed var(--line);border-radius:14px}
 .notice{margin-top:15px;padding:13px 15px;border:1px solid #5d4826;background:#211d15;border-radius:12px;color:#d8c49f;font-size:13px}
 .notice strong{color:var(--orange)}
-.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:25px}
+.team-section{margin-top:28px}.team-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.team-card{padding:16px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#0e1e30,#091625);min-width:0}.team-card strong{display:block;font-size:16px;overflow-wrap:anywhere}.team-card .role{display:inline-block;margin-top:7px;padding:4px 8px;border-radius:999px;background:#163a2c;color:var(--green);font-size:11px;font-weight:850}.team-card .role.ai{background:#193449;color:var(--cyan)}.team-card p{font-size:12px;color:var(--muted);margin:9px 0 0}.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:25px}
 .info-card{padding:19px;border:1px solid var(--line);border-radius:16px;background:#0b1929}
 .info-card h3{margin:0 0 8px;font-size:16px}.info-card p,.info-card li{font-size:13px;color:var(--muted)}
 .info-card ul{padding-left:20px;margin-bottom:0}
@@ -97,8 +97,8 @@ footer{border-top:1px solid var(--line);padding:22px 0 30px;color:#70869e;font-s
 .footer-row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#d8fff2;color:#062016;padding:10px 15px;border-radius:10px;font-size:13px;font-weight:800;transition:.2s;box-shadow:var(--shadow);z-index:10}
 .toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:850px){.hero{grid-template-columns:1fr}.hero-card{max-width:none}.workspace{grid-template-columns:1fr}.registry-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.editor,.console{min-height:240px}}
-@media(max-width:560px){.wrap{width:min(100% - 20px,1220px)}header{padding-top:15px}.brand-sub{display:none}.hero{padding-top:30px}.section-head{align-items:start;flex-direction:column}.registry-tools{width:100%}.search{width:100%}.registry-grid,.bottom-grid{grid-template-columns:1fr}.panel-head{align-items:flex-start;flex-direction:column}.editor{padding:14px;font-size:12px;min-height:230px}.console{min-height:210px}.stat strong{font-size:16px}.hero-card{padding:16px}}
+@media(max-width:850px){.hero{grid-template-columns:1fr}.hero-card{max-width:none}.workspace{grid-template-columns:1fr}.registry-grid,.team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.editor,.console{min-height:240px}}
+@media(max-width:560px){.wrap{width:min(100% - 20px,1220px)}header{padding-top:15px}.brand-sub{display:none}.hero{padding-top:30px}.section-head{align-items:start;flex-direction:column}.registry-tools{width:100%}.search{width:100%}.registry-grid,.team-grid,.bottom-grid{grid-template-columns:1fr}.panel-head{align-items:flex-start;flex-direction:column}.editor{padding:14px;font-size:12px;min-height:230px}.console{min-height:210px}.stat strong{font-size:16px}.hero-card{padding:16px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
@@ -159,13 +159,35 @@ Print.false("This line stays hidden")
       <div class="notice"><strong>Registry note:</strong> PROPOSED entries are ideas only. They are not treated as official syntax and are not executed by this demo interpreter.</div>
     </section>
 
+    <section class="team-section" id="team">
+      <div class="section-head"><div><h2>Zyrox Team</h2><p>People helping build, test, and grow the Zyrox project.</p></div><span class="pill">PROJECT ROSTER</span></div>
+      <div class="team-grid">
+        <article class="team-card"><strong>Ulwan (Cil)</strong><span class="role">Original Creator · Tester</span><p>Testing syntax, experimenting, and researching Zyrox.</p></article>
+        <article class="team-card"><strong>GPT</strong><span class="role ai">Second Owner · Lead Developer</span><p>Supporting interpreter design, code, and documentation.</p></article>
+        <article class="team-card"><strong>Gemini</strong><span class="role ai">Co-Owner · Manager</span><p>Reviewing ideas and helping evaluate project direction.</p></article>
+        <article class="team-card"><strong>Dola / Mimin Dola</strong><span class="role">First Contributor</span><p>Contributing ideas and helping review the project.</p></article>
+        <article class="team-card"><strong>Abay</strong><span class="role">Tester</span><p>Testing syntax and trying Zyrox features.</p></article>
+        <article class="team-card"><strong>Agam</strong><span class="role">Tester</span><p>Testing syntax and trying Zyrox features.</p></article>
+        <article class="team-card"><strong>Vidic</strong><span class="role">Tester</span><p>Testing syntax and trying Zyrox features.</p></article>
+        <article class="team-card"><strong>Rajata</strong><span class="role">Tester</span><p>Testing syntax and trying Zyrox features.</p></article>
+        <article class="team-card"><strong>Alvaro</strong><span class="role">Tester</span><p>Testing syntax and trying Zyrox features.</p></article>
+        <article class="team-card"><strong>Avram</strong><span class="role">Member</span><p>Part of the Zyrox project community.</p></article>
+        <article class="team-card"><strong>Anwar</strong><span class="role">Member</span><p>Part of the Zyrox project community.</p></article>
+        <article class="team-card"><strong>Asyraf</strong><span class="role">Member</span><p>Part of the Zyrox project community.</p></article>
+        <article class="team-card"><strong>Gading</strong><span class="role">Member</span><p>Part of the Zyrox project community.</p></article>
+        <article class="team-card"><strong>Hamzah</strong><span class="role">Member</span><p>Part of the Zyrox project community.</p></article>
+        <article class="team-card"><strong>Ucup</strong><span class="role">Member</span><p>Part of the Zyrox project community.</p></article>
+        <article class="team-card"><strong>Yusuf</strong><span class="role">Member</span><p>Part of the Zyrox project community.</p></article>
+      </div>
+    </section>
+
     <section class="bottom-grid">
       <article class="info-card"><h3>What works in V3.3?</h3><p>The playground currently executes the documented display statements:</p><ul><li><code>Print.true("text")</code> — displays the text.</li><li><code>Print.false("text")</code> — suppresses the text.</li><li>Blank lines and <code>//</code> comments are ignored.</li></ul></article>
       <article class="info-card"><h3>CORE vs PROPOSED</h3><p>Only syntax with a defined behavior is listed as CORE. Concepts without a confirmed, complete grammar remain PROPOSED or reserved until the project owner approves their rules.</p><p>V3.3 is a browser demo, not a claim that every planned Zyrox feature is implemented.</p></article>
     </section>
   </main>
 </div>
-<footer><div class="wrap footer-row"><span>© Zyrox Language Project · V3.3 Web Edition</span><span>Made for learning, testing, and experimenting.</span></div></footer>
+<footer><div class="wrap footer-row"><span>© Zyrox Language Project · V3.3 Web Edition</span><span>Made for learning, testing, and experimenting · Team roster included.</span></div></footer>
 <div class="toast" id="toast" role="status"></div>
 <script>
 "use strict";
