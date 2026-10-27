@@ -1,379 +1,248 @@
-<!DOCTYPE html>
-<html lang="id">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#071a2e">
-  <meta name="description" content="Zyrox Interpreter V3.2 Ultimate — interpreter eksperimental dengan command interaktif.">
-  <title>ZYROX — Interpreter V3.2 Ultimate</title>
-  <style>
-    :root {
-      --bg: #061321;
-      --panel: #0b2034;
-      --panel-2: #102b42;
-      --text: #eff8ff;
-      --muted: #a8bfd1;
-      --mint: #42f5d4;
-      --blue: #65b8ff;
-      --border: rgba(158, 208, 239, .17);
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0; color: var(--text);
-      background: radial-gradient(ellipse at top, #123b52 0, var(--bg) 48rem);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
-      line-height: 1.6;
-    }
-    a { color: inherit; text-decoration: none; }
-    .wrap { width: min(1080px, 92%); margin: auto; }
-    header {
-      position: sticky; top: 0; z-index: 10;
-      backdrop-filter: blur(16px);
-      background: rgba(6, 19, 33, .82);
-      border-bottom: 1px solid var(--border);
-    }
-    nav { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 15px 0; }
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: 2px; }
-    .logo {
-      display: grid; place-items: center; width: 38px; height: 38px;
-      border-radius: 12px; color: #041720; background: var(--mint); font-weight: 1000;
-      box-shadow: 0 0 24px rgba(66,245,212,.2);
-    }
-    .navlinks { display: flex; flex-wrap: wrap; gap: 17px; color: var(--muted); font-size: .92rem; }
-    .navlinks a:hover { color: var(--mint); }
-    .hero { padding: 88px 0 64px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 42px; align-items: center; }
-    .tag {
-      display: inline-flex; gap: 8px; align-items: center; padding: 6px 11px;
-      color: var(--mint); border: 1px solid rgba(66,245,212,.28); background: rgba(66,245,212,.07);
-      border-radius: 999px; font-size: .8rem; font-weight: 700;
-    }
-    h1 { font-size: clamp(3rem, 8vw, 6rem); line-height: .98; letter-spacing: -.07em; margin: 20px 0; }
-    h1 span { color: var(--mint); }
-    .lead { max-width: 590px; font-size: 1.08rem; color: var(--muted); }
-    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
-    .btn { border: 1px solid var(--border); padding: 11px 17px; border-radius: 12px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
-    .btn.primary { color: #031b1a; background: var(--mint); border-color: var(--mint); }
-    .btn.secondary { background: rgba(255,255,255,.035); }
-    .btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
-    .terminal {
-      border: 1px solid rgba(101,184,255,.25); background: rgba(7,23,39,.9);
-      border-radius: 20px; overflow: hidden; box-shadow: 0 25px 80px rgba(0,0,0,.24);
-    }
-    .term-top { display: flex; gap: 7px; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border); color: var(--muted); font-size: .82rem; }
-    .dot { width: 9px; height: 9px; border-radius: 50%; background: #51758a; }
-    pre { margin: 0; padding: 23px; overflow-x: auto; font: .95rem/1.9 ui-monospace, SFMono-Regular, Consolas, monospace; color: #d9f4ff; }
-    .mint { color: var(--mint); } .blue { color: var(--blue); } .muted { color: var(--muted); }
-    section { padding: 48px 0; }
-    .section-head { margin-bottom: 24px; }
-    .eyebrow { color: var(--mint); text-transform: uppercase; font-size: .76rem; letter-spacing: .16em; font-weight: 900; }
-    h2 { font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.15; margin: 8px 0; }
-    .section-desc { color: var(--muted); max-width: 680px; }
-    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-    .card { border: 1px solid var(--border); background: linear-gradient(145deg, rgba(16,43,66,.8), rgba(7,24,40,.82)); padding: 22px; border-radius: 17px; }
-    .card .symbol { font-size: 1.5rem; margin-bottom: 8px; }
-    .card h3 { margin: 4px 0 8px; }
-    .card p { color: var(--muted); margin: 0; font-size: .94rem; }
-    .syntax-list { display: grid; gap: 10px; }
-    .syntax { display: flex; justify-content: space-between; align-items: center; gap: 14px; border: 1px solid var(--border); background: rgba(11,32,52,.72); border-radius: 12px; padding: 13px 15px; }
-    code { color: var(--mint); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
-    .syntax small { color: var(--muted); text-align: right; }
-    .notice { margin-top: 15px; border-left: 3px solid var(--blue); padding: 12px 15px; background: rgba(101,184,255,.07); color: var(--muted); border-radius: 0 10px 10px 0; font-size: .9rem; }
-    .team { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-    .member { padding: 18px; border: 1px solid var(--border); border-radius: 14px; background: rgba(11,32,52,.7); }
-    .member strong { display: block; }
-    .member span { color: var(--mint); font-size: .84rem; }
-    .member p { color: var(--muted); font-size: .88rem; margin-bottom: 0; }
-    .cta { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 27px; border: 1px solid rgba(66,245,212,.22); border-radius: 19px; background: linear-gradient(110deg, rgba(66,245,212,.09), rgba(101,184,255,.07)); }
-    footer { border-top: 1px solid var(--border); margin-top: 55px; padding: 24px 0; color: var(--muted); font-size: .86rem; }
-
-    .playground { padding-bottom: 20px; }
-    .play-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; padding:18px; }
-    .play-grid label { display:block; color:var(--mint); font-size:.75rem; letter-spacing:.14em; font-weight:900; margin:0 0 9px; }
-    #zyroxCode { width:100%; min-height:370px; resize:vertical; background:#04111f; color:#e5f7ff; border:1px solid var(--border); border-radius:12px; padding:15px; font: .9rem/1.7 ui-monospace,Consolas,monospace; outline:none; }
-    #zyroxCode:focus { border-color:var(--mint); }
-    .output { min-height:370px; max-height:520px; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; border:1px solid var(--border); border-radius:12px; background:#04111f; color:#d9f4ff; padding:15px; }
-    .editor-actions { margin-top:12px; }
-    @media(max-width:760px){.play-grid{grid-template-columns:1fr;padding:12px} #zyroxCode,.output{min-height:260px}}
-
-    @media (max-width: 760px) {
-      .hero { grid-template-columns: 1fr; padding-top: 58px; gap: 30px; }
-      .cards { grid-template-columns: 1fr; }
-      .team { grid-template-columns: repeat(2, 1fr); }
-      .navlinks { gap: 10px; font-size: .82rem; }
-      .cta { align-items: flex-start; flex-direction: column; }
-    }
-    @media (max-width: 420px) { .navlinks a:nth-child(3) { display: none; } .team { grid-template-columns: 1fr 1fr; } }
-
-    /* ZYROX V3.2 — Modern unified UI */
-    :root{--bg:#050914;--panel:#0b1224;--panel-2:#101c32;--text:#f3f8ff;--muted:#9eafc9;--mint:#55ffe0;--blue:#62a8ff;--border:rgba(128,173,255,.18)}
-    body{background:radial-gradient(ellipse at 15% -10%,rgba(38,110,191,.25),transparent 38rem),radial-gradient(ellipse at 100% 20%,rgba(40,255,212,.09),transparent 34rem),#050914;background-attachment:fixed}
-    header{background:rgba(5,9,20,.78);border-bottom-color:rgba(98,168,255,.18)}
-    .wrap{width:min(1160px,92%)}
-    .logo{border-radius:13px;background:linear-gradient(135deg,#55ffe0,#62a8ff);box-shadow:0 0 32px rgba(85,255,224,.22)}
-    .hero{padding:100px 0 74px;gap:50px}
-    h1{font-size:clamp(3.3rem,9vw,6.7rem);letter-spacing:-.085em}
-    h1 span{background:linear-gradient(100deg,#55ffe0,#62a8ff 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .tag{background:rgba(85,255,224,.06);box-shadow:inset 0 0 22px rgba(85,255,224,.025)}
-    .terminal,.card,.member,.syntax,.playground,.cta{backdrop-filter:blur(18px);box-shadow:0 18px 60px rgba(0,0,0,.16)}
-    .terminal{border-radius:22px;border-color:rgba(98,168,255,.28);box-shadow:0 24px 90px rgba(0,0,0,.3),0 0 45px rgba(98,168,255,.055)}
-    .term-top{background:rgba(98,168,255,.045)}
-    .btn{transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;border-radius:13px}
-    .btn.primary{background:linear-gradient(110deg,#55ffe0,#78c7ff);box-shadow:0 8px 28px rgba(85,255,224,.12)}
-    .btn.secondary{background:rgba(255,255,255,.045)}
-    .btn:hover{box-shadow:0 8px 24px rgba(98,168,255,.13)}
-    .card,.member,.syntax{border-color:rgba(128,173,255,.16);background:linear-gradient(145deg,rgba(17,31,55,.82),rgba(8,15,30,.86));transition:transform .2s ease,border-color .2s ease}
-    .card:hover,.member:hover,.syntax:hover{transform:translateY(-3px);border-color:rgba(85,255,224,.38)}
-    .playground{border:1px solid var(--border);border-radius:22px;background:linear-gradient(145deg,rgba(14,26,47,.94),rgba(7,13,27,.96));overflow:hidden}
-    #zyroxCode,.output{background:#050a16;border-color:rgba(98,168,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}
-    #zyroxCode:focus{border-color:var(--mint);box-shadow:0 0 0 3px rgba(85,255,224,.08)}
-    .output{color:#c9fff2}
-    .notice{border-left-color:var(--mint);background:rgba(85,255,224,.045)}
-    .cta{border-radius:22px}
-    footer{border-top-color:rgba(128,173,255,.14)}
-    ::selection{background:rgba(85,255,224,.25);color:#fff}
-    @media(max-width:760px){.hero{padding:62px 0 42px}.play-grid{gap:14px}.navlinks{justify-content:flex-end}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<title>ZYROX Interpreter V3.3</title>
+<meta name="description" content="ZYROX V3.3 — a lightweight browser playground for the Zyrox language, with an editor, output console, and Mega Syntax Registry.">
+<style>
+:root{
+  color-scheme:dark;--bg:#07111f;--panel:#0c192a;--panel2:#101f33;--line:#20364e;
+  --text:#e8f2ff;--muted:#91a7c0;--cyan:#55e6d0;--blue:#5ba8ff;--green:#83f0ad;
+  --orange:#ffcb7a;--red:#ff7f91;--radius:18px;--shadow:0 18px 50px #0004;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 15% -10%,#103d56 0,transparent 38%),radial-gradient(ellipse at 100% 0,#15274d 0,transparent 32%),var(--bg);color:var(--text);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+a{color:var(--cyan);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{width:min(1220px,calc(100% - 32px));margin:auto}
+header{padding:24px 0 18px;border-bottom:1px solid #20364e99}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.logo{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,var(--cyan),var(--blue));color:#06111d;font-weight:950;font-size:22px;box-shadow:0 8px 28px #55e6d033}
+.brand-name{font-weight:900;letter-spacing:.15em;font-size:17px}
+.brand-sub{color:var(--muted);font-size:12px;letter-spacing:.08em}
+.nav-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{border:1px solid #2c4a64;border-radius:999px;padding:6px 11px;font-size:12px;color:#b6c9df;background:#0c1a2a}
+.pill.live{color:var(--green);border-color:#2a684d}
+.hero{padding:42px 0 28px;display:grid;grid-template-columns:1.3fr .7fr;gap:26px;align-items:center}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);font-weight:800}
+h1{font-size:clamp(32px,5vw,56px);line-height:1.04;letter-spacing:-.045em;margin:12px 0 16px}
+.gradient{background:linear-gradient(90deg,#eafaff,var(--cyan),#79aaff);background-clip:text;color:transparent}
+.lead{max-width:690px;color:#a9bdd3;font-size:16px;margin:0}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn{border:1px solid var(--line);border-radius:12px;padding:10px 15px;background:#12253a;color:var(--text);font-weight:750;transition:transform .15s,border-color .15s}
+.btn:hover{transform:translateY(-1px);border-color:#4c7799}
+.btn.primary{color:#06151d;background:linear-gradient(120deg,var(--cyan),#83baff);border:0}
+.btn.subtle{background:transparent}
+.hero-card{padding:22px;border:1px solid #27465c;background:linear-gradient(145deg,#10263aee,#0a1728ee);border-radius:22px;box-shadow:var(--shadow)}
+.hero-card .big{font-size:32px;font-weight:900;letter-spacing:-.04em}
+.hero-card p{color:var(--muted);margin:4px 0 18px}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{padding:10px;border-radius:12px;background:#071525;border:1px solid #20364e}
+.stat strong{display:block;font-size:18px}.stat span{font-size:11px;color:var(--muted)}
+main{padding:10px 0 55px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:14px;margin:18px 0 14px}
+.section-head h2{margin:0;font-size:23px;letter-spacing:-.025em}
+.section-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.workspace{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(300px,.88fr);gap:16px;align-items:stretch}
+.panel{min-width:0;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,#0d1b2c,#091625);box-shadow:var(--shadow);overflow:hidden}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 17px;border-bottom:1px solid var(--line);background:#0c192a}
+.panel-title{display:flex;align-items:center;gap:9px;font-weight:800}
+.dots{display:flex;gap:5px}.dots i{display:block;width:8px;height:8px;border-radius:50%;background:#39516a}.dots i:first-child{background:#ff7f91}.dots i:nth-child(2){background:#ffcb7a}.dots i:nth-child(3){background:#83f0ad}
+.panel-tools{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.btn.small{padding:6px 10px;border-radius:9px;font-size:12px}
+.editor-wrap{position:relative;background:#081321}
+.editor-meta{display:flex;justify-content:space-between;padding:8px 14px;border-bottom:1px solid #1b2d42;color:#7f96b0;font-size:11px}
+.editor{display:block;width:100%;min-height:300px;resize:vertical;border:0;outline:0;padding:18px 20px;background:transparent;color:#d7f2ff;font:14px/1.85 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;tab-size:2;white-space:pre;overflow:auto;caret-color:var(--cyan)}
+.editor:focus{box-shadow:inset 0 0 0 1px #55e6d044}
+.editor-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 15px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+.run-row{display:flex;gap:8px;align-items:center}
+.console{min-height:300px;padding:18px 19px;font:14px/1.8 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;color:#d8f9e6}
+.console .placeholder{font-family:ui-sans-serif,system-ui,sans-serif;color:#7289a2}
+.console .error{color:var(--red)}
+.console .success{color:var(--green)}
+.status{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}
+.status-dot{width:7px;height:7px;border-radius:50%;background:#7a91a8}
+.status-dot.ok{background:var(--green);box-shadow:0 0 12px #83f0ad66}
+.status-dot.err{background:var(--red)}
+.registry{margin-top:26px}
+.registry-tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.search{width:min(270px,100%);border:1px solid var(--line);background:#091625;color:var(--text);padding:10px 12px;border-radius:11px;outline:0}
+.search:focus{border-color:var(--cyan)}
+.tabs{display:flex;gap:6px;padding:7px;border:1px solid var(--line);border-radius:12px;background:#091625}
+.tab{padding:7px 12px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-size:13px;font-weight:750}
+.tab[aria-selected="true"]{background:#193449;color:var(--cyan)}
+.registry-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.syntax-card{padding:16px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#0e1e30,#091625);min-width:0}
+.syntax-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.syntax-name{font-weight:850;overflow-wrap:anywhere}
+.tag{font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-radius:6px;padding:4px 6px;font-weight:900;white-space:nowrap}
+.tag.core{color:var(--green);background:#163a2c}.tag.proposed{color:var(--orange);background:#3c2e18}
+.syntax-card code{display:block;margin:13px 0 9px;padding:10px;border-radius:9px;background:#06111e;color:#a9e8ff;font:12px/1.7 ui-monospace,monospace;overflow-wrap:anywhere}
+.syntax-card p{font-size:13px;color:var(--muted);margin:0}
+.syntax-card .copy{margin-top:12px}
+.empty{grid-column:1/-1;color:var(--muted);padding:25px;text-align:center;border:1px dashed var(--line);border-radius:14px}
+.notice{margin-top:15px;padding:13px 15px;border:1px solid #5d4826;background:#211d15;border-radius:12px;color:#d8c49f;font-size:13px}
+.notice strong{color:var(--orange)}
+.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:25px}
+.info-card{padding:19px;border:1px solid var(--line);border-radius:16px;background:#0b1929}
+.info-card h3{margin:0 0 8px;font-size:16px}.info-card p,.info-card li{font-size:13px;color:var(--muted)}
+.info-card ul{padding-left:20px;margin-bottom:0}
+footer{border-top:1px solid var(--line);padding:22px 0 30px;color:#70869e;font-size:12px}
+.footer-row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#d8fff2;color:#062016;padding:10px 15px;border-radius:10px;font-size:13px;font-weight:800;transition:.2s;box-shadow:var(--shadow);z-index:10}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:850px){.hero{grid-template-columns:1fr}.hero-card{max-width:none}.workspace{grid-template-columns:1fr}.registry-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.editor,.console{min-height:240px}}
+@media(max-width:560px){.wrap{width:min(100% - 20px,1220px)}header{padding-top:15px}.brand-sub{display:none}.hero{padding-top:30px}.section-head{align-items:start;flex-direction:column}.registry-tools{width:100%}.search{width:100%}.registry-grid,.bottom-grid{grid-template-columns:1fr}.panel-head{align-items:flex-start;flex-direction:column}.editor{padding:14px;font-size:12px;min-height:230px}.console{min-height:210px}.stat strong{font-size:16px}.hero-card{padding:16px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
 </head>
 <body>
-  <header>
-    <nav class="wrap">
-      <a class="brand" href="#home"><span class="logo">Z</span><span>ZYROX</span></a>
-      <div class="navlinks">
-        <a href="#about">Tentang</a><a href="#syntax">Syntax</a><a href="#playground">Coba</a><a href="#registry">Registry</a><a href="#team">Tim</a>
-      </div>
-    </nav>
-  </header>
-
-  <main>
-    <div class="wrap hero" id="home">
-      <div>
-        <span class="tag">● PROYEK EKSPERIMENTAL · V3.2 ULTIMATE</span>
-        <h1>Code beyond<br><span>limits.</span></h1>
-        <p class="lead">Mengenal Zyrox Interpreter V3.2 Ultimate — interpreter browser dengan input, variabel, logika, fungsi, loop, array, tanggal, random, dan banyak command lainnya.</p>
-        <div class="actions">
-          <a class="btn primary" href="#syntax">Jelajahi Syntax ↘</a>
-          <a class="btn secondary" href="#about">Tentang Zyrox</a>
-        </div>
-      </div>
-      <div class="terminal" aria-label="Contoh kode Zyrox">
-        <div class="term-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span style="margin-left:7px">zyrox_demo.zx</span></div>
-        <pre><span class="muted">// Contoh konsep Zyrox</span>
-<span class="mint">Print.true</span>()
-
-<span class="blue">Ref</span> = "Zyrox V3.0"
-
-<span class="mint">fact</span> {
-  <span class="muted">// logika eksperimental</span>
-}
-
-<span class="muted"># Keep testing...</span></pre>
-      </div>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#" aria-label="Zyrox home">
+      <span class="logo">Z</span>
+      <span><span class="brand-name">ZYROX</span><br><span class="brand-sub">LANGUAGE PLAYGROUND</span></span>
+    </a>
+    <div class="nav-right"><span class="pill live">● SYSTEM READY</span><span class="pill">INTERPRETER V3.3</span></div>
+  </div>
+</header>
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">A small language. A growing idea.</div>
+      <h1>Build ideas.<br><span class="gradient">Run Zyrox.</span></h1>
+      <p class="lead">Experiment with the Zyrox core syntax in a clean, browser-based playground. Write code, run it, inspect the output, and explore the Mega Syntax Registry.</p>
+      <div class="hero-actions"><a class="btn primary" href="#playground">Try Zyrox →</a><a class="btn subtle" href="#registry">Explore syntax</a></div>
     </div>
-
-    <section class="wrap" id="about">
-      <div class="section-head">
-        <div class="eyebrow">Tentang proyek</div>
-        <h2>Bahasa yang dibangun lewat eksperimen.</h2>
-        <p class="section-desc">Zyrox adalah proyek konseptual untuk merancang syntax, aturan, dan kemungkinan interpreter. V3.2 membawa interpreter browser yang dapat menjalankan subset command Zyrox yang didokumentasikan di bawah. Sintaks khusus tetap dipertahankan; fitur tambahan diberi status eksperimental.</p>
-      </div>
-      <div class="cards">
-        <article class="card"><div class="symbol">⌘</div><h3>Syntax eksperimental</h3><p>Merancang cara baru untuk menulis perintah, kondisi, input, dan output.</p></article>
-        <article class="card"><div class="symbol">⌁</div><h3>Test & research</h3><p>Menguji konsistensi syntax dan mencari bagian yang masih membingungkan.</p></article>
-        <article class="card"><div class="symbol">◈</div><h3>Interpreter V3.2</h3><p>Menguji command yang benar-benar berjalan dengan parser sederhana tanpa eval JavaScript.</p></article>
-      </div>
-    </section>
-
-    <section class="wrap" id="syntax">
-      <div class="section-head">
-        <div class="eyebrow">Syntax showcase</div>
-        <h2>Kenali beberapa syntax.</h2>
-        <p class="section-desc">Berikut beberapa konsep dasar yang pernah didefinisikan dalam proyek Zyrox.</p>
-      </div>
-      <div class="syntax-list">
-        <div class="syntax"><code>Print.true()</code><small>Konsep perintah output</small></div>
-        <div class="syntax"><code>Print.false()</code><small>Konsep tidak menampilkan teks</small></div>
-        <div class="syntax"><code>fact</code><small>Keputusan / kondisi benar</small></div>
-        <div class="syntax"><code>not</code><small>Keputusan alternatif</small></div>
-        <div class="syntax"><code>Ref</code><small>Referensi atau posisi</small></div>
-        <div class="syntax"><code>[ ... ]</code><small>Blok / fokus kode</small></div>
-      </div>
-      <div class="notice">Catatan: halaman ini mendokumentasikan konsep proyek. Sebagian syntax masih berupa rancangan dan belum tentu dapat dieksekusi oleh interpreter nyata.</div>
-    </section>
-
-
-    <section class="wrap" id="playground">
-      <div class="section-head">
-        <div class="eyebrow">Live interpreter · V3.2 Ultimate</div>
-        <h2>Coba Zyrox di sini.</h2>
-        <p class="section-desc">Tulis program Zyrox, tekan Run, dan lihat hasilnya. Command yang tersedia berjalan di browser; Input meminta jawaban lewat dialog browser.</p>
-      </div>
-      <div class="terminal playground">
-        <div class="term-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span style="margin-left:7px">zyrox_v3_2.zx</span><span style="margin-left:auto" id="runStatus">Ready</span></div>
-        <div class="play-grid">
-          <div><label for="zyroxCode">EDITOR</label><textarea id="zyroxCode" spellcheck="false"># Zyrox V3.2 Ultimate
-Print.line("=== ZYROX V3.2 ===")
-Var.set("name", "Ulwan")
-Var.set("score", 100)
-Print.line("Hello " + Var.get("name"))
-Print.line("Score: " + Var.get("score"))
-Print.line(Math.add(10, 5))
-Print.line(String.upper("zyrox interpreter"))
-Array.create("games")
-Array.push("games", "Roblox")
-Array.push("games", "Minecraft")
-Print.line(Array.get("games", 0))
-Print.line("Random: " + Random.int(1, 100))
-Print.line("Today: " + Date.today())</textarea>
-            <div class="actions editor-actions"><button class="btn primary" id="runZyrox">▶ Run</button><button class="btn secondary" id="clearOutput">Clear output</button><button class="btn secondary" id="resetCode">Reset example</button></div>
+    <aside class="hero-card">
+      <div class="eyebrow">V3.3 / WEB EDITION</div>
+      <div class="big">Your code space.</div>
+      <p>A refreshed interface for experimenting with the currently supported core.</p>
+      <div class="stat-row"><div class="stat"><strong>01</strong><span>EDITOR</span></div><div class="stat"><strong>02</strong><span>OUTPUT</span></div><div class="stat"><strong>∞</strong><span>IDEAS</span></div></div>
+    </aside>
+  </section>
+  <main>
+    <section id="playground">
+      <div class="section-head"><div><h2>Try Zyrox here</h2><p>Run supported statements and see the result instantly.</p></div><span class="pill">LOCAL EXECUTION · NO ACCOUNT</span></div>
+      <div class="workspace">
+        <section class="panel" aria-label="Zyrox code editor">
+          <div class="panel-head"><div class="panel-title"><span class="dots"><i></i><i></i><i></i></span> Code Editor</div><div class="panel-tools"><button class="btn small" id="exampleBtn">Load example</button><button class="btn small" id="clearBtn">Clear</button></div></div>
+          <div class="editor-wrap">
+            <div class="editor-meta"><span>main.zyx</span><span id="lineCount">3 lines</span></div>
+            <textarea id="code" class="editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Write Zyrox code">Print.true("Hello World")
+Print.false("This line stays hidden")
+// Try editing this example!</textarea>
           </div>
-          <div><label for="zyroxOutput">OUTPUT</label><pre id="zyroxOutput" class="output" aria-live="polite">Zyrox Interpreter V3.2 Ultimate\nReady to run.</pre><div class="notice">Safety: code runs in this interpreter only. File.save creates a download; it cannot access arbitrary device files without user action. No JavaScript eval is used.</div></div>
-        </div>
-      </div>
-    </section>
-    <section class="wrap" id="registry">
-      <div class="section-head"><div class="eyebrow">Mega Syntax Registry</div><h2>Command reference.</h2><p class="section-desc">Core syntax yang ditetapkan creator dipertahankan. Command tambahan adalah API V3.2 eksperimental dan hanya command yang diimplementasikan yang bisa dieksekusi.</p></div>
-      <div class="cards">
-        <article class="card"><h3>Core / Print</h3><p><code>Print.true("teks")</code><br><code>Print.false("teks")</code><br><code>Print.line(value)</code><br><code>Print.number(value)</code><br><code>Print.clear()</code><br><code>Print.error(value)</code><br><code>Ref</code>, <code>fact</code>, <code>not</code>, <code>[ ]</code></p></article>
-        <article class="card"><h3>Variables / Input</h3><p><code>Var.set(name, value)</code><br><code>Var.get(name)</code><br><code>Var.delete(name)</code><br><code>Var.exists(name)</code><br><code>Input.text(prompt)</code><br><code>Input.number(prompt)</code><br><code>Input.confirm(prompt)</code></p></article>
-        <article class="card"><h3>Math / Comparison</h3><p><code>Math.add(a,b)</code>, <code>Math.sub(a,b)</code><br><code>Math.mul(a,b)</code>, <code>Math.div(a,b)</code><br><code>Math.pow(a,b)</code>, <code>Math.sqrt(a)</code><br><code>Compare.eq(a,b)</code>, <code>Compare.gt(a,b)</code><br><code>Compare.lt(a,b)</code>, <code>Logic.and(a,b)</code></p></article>
-        <article class="card"><h3>Strings / Conversion</h3><p><code>String.upper(s)</code>, <code>String.lower(s)</code><br><code>String.trim(s)</code>, <code>String.length(s)</code><br><code>String.replace(s,a,b)</code><br><code>Convert.number(v)</code><br><code>Convert.text(v)</code>, <code>Type.of(v)</code></p></article>
-        <article class="card"><h3>Arrays / Random / Date</h3><p><code>Array.create(name)</code><br><code>Array.push(name,value)</code><br><code>Array.get(name,index)</code><br><code>Array.length(name)</code>, <code>Array.pop(name)</code><br><code>Random.int(min,max)</code>, <code>Random.float()</code><br><code>Date.today()</code>, <code>Date.now()</code></p></article>
-        <article class="card"><h3>Loop / Functions / Files</h3><p><code>Loop.range(start,end)</code><br><code>Function.define(name,body)</code> (limited)<br><code>File.save(name,text)</code><br><code>File.read()</code> (user selects file)<br><code>Error.raise(message)</code><br><code>Comment: # text</code> or <code>// text</code></p></article>
-      </div>
-      <div class="notice">Creator-defined semantics remain special: <code>Print.true()</code> displays its argument and <code>Print.false()</code> does not display it, following the current Zyrox core definition. Use <code>Print.line()</code> for conventional output. The special <code>(#..."True-text)</code> / <code>(#..."False-Text)</code> syntax is also recognized for simple text.</div>
-    </section>
-
-    <section class="wrap" id="team">
-      <div class="section-head">
-        <div class="eyebrow">Struktur kolaborasi</div>
-        <h2>Peran dalam proyek.</h2>
-        <p class="section-desc">Pembagian peran yang direncanakan untuk kolaborasi Zyrox.</p>
-      </div>
-      <div class="team">
-        <div class="member"><strong>GPT</strong><span>Owner / Lead Developer</span><p>Membantu merancang syntax dan arsitektur.</p></div>
-        <div class="member"><strong>Gemini</strong><span>Co-Owner / Manager</span><p>Meninjau rancangan dan memberi evaluasi.</p></div>
-        <div class="member"><strong>Dola</strong><span>Contributor</span><p>Membantu meninjau ide dan mencari bug.</p></div>
-        <div class="member"><strong>Ulwan</strong><span>Tester · Original Creator</span><p>Menguji syntax, bereksperimen, dan melakukan riset.</p></div>
-        <div class="member"><strong>Abay</strong><span>Tester</span><p>Menguji syntax dan mencoba fitur Zyrox.</p></div>
-        <div class="member"><strong>Agam</strong><span>Tester</span><p>Menguji syntax dan mencoba fitur Zyrox.</p></div>
-        <div class="member"><strong>Vidic</strong><span>Tester</span><p>Menguji syntax dan mencoba fitur Zyrox.</p></div>
-        <div class="member"><strong>Rajata</strong><span>Tester</span><p>Menguji syntax dan mencoba fitur Zyrox.</p></div>
-        <div class="member"><strong>Alvaro</strong><span>Tester</span><p>Menguji syntax dan mencoba fitur Zyrox.</p></div>
-        <div class="member"><strong>Avram</strong><span>Member</span><p>Bagian dari komunitas proyek Zyrox.</p></div>
-        <div class="member"><strong>Anwar</strong><span>Member</span><p>Bagian dari komunitas proyek Zyrox.</p></div>
-        <div class="member"><strong>Asyraf</strong><span>Member</span><p>Bagian dari komunitas proyek Zyrox.</p></div>
-        <div class="member"><strong>Gading</strong><span>Member</span><p>Bagian dari komunitas proyek Zyrox.</p></div>
-        <div class="member"><strong>Hamzah</strong><span>Member</span><p>Bagian dari komunitas proyek Zyrox.</p></div>
-        <div class="member"><strong>Aaron</strong><span>Member</span><p>Bagian dari komunitas proyek Zyrox.</p></div>
+          <div class="editor-foot"><span>Tip: one statement per line</span><div class="run-row"><button class="btn primary" id="runBtn">▶ Run code</button></div></div>
+        </section>
+        <section class="panel" aria-label="Program output">
+          <div class="panel-head"><div class="panel-title">⌁ Output Console</div><div class="status"><span class="status-dot" id="statusDot"></span><span id="statusText">Waiting to run</span></div></div>
+          <div id="output" class="console" aria-live="polite"><span class="placeholder">Your program output will appear here…&#10;&#10;Press “Run code” to start.</span></div>
+          <div class="editor-foot"><span id="runInfo">No execution yet</span><button class="btn small" id="copyOutput">Copy output</button></div>
+        </section>
       </div>
     </section>
 
-    <section class="wrap">
-      <div class="cta">
-        <div><div class="eyebrow">Langkah selanjutnya</div><h2 style="margin-bottom:5px">Build. Test. Improve.</h2><p class="section-desc" style="margin:0">Zyrox V3.2 Ultimate — Build. Test. Improve.</p></div>
-        <button class="btn primary" id="helloBtn" type="button">Test tombol ✦</button>
+    <section class="registry" id="registry">
+      <div class="section-head"><div><h2>Mega Syntax Registry</h2><p>Clear separation between documented CORE syntax and ideas that are still PROPOSED.</p></div></div>
+      <div class="registry-tools">
+        <div class="tabs" role="tablist" aria-label="Syntax category"><button class="tab" role="tab" aria-selected="true" data-filter="ALL">All</button><button class="tab" role="tab" aria-selected="false" data-filter="CORE">CORE</button><button class="tab" role="tab" aria-selected="false" data-filter="PROPOSED">PROPOSED</button></div>
+        <input class="search" id="search" type="search" placeholder="Search syntax…" aria-label="Search syntax">
       </div>
+      <div class="registry-grid" id="registryGrid" style="margin-top:14px"></div>
+      <div class="notice"><strong>Registry note:</strong> PROPOSED entries are ideas only. They are not treated as official syntax and are not executed by this demo interpreter.</div>
+    </section>
+
+    <section class="bottom-grid">
+      <article class="info-card"><h3>What works in V3.3?</h3><p>The playground currently executes the documented display statements:</p><ul><li><code>Print.true("text")</code> — displays the text.</li><li><code>Print.false("text")</code> — suppresses the text.</li><li>Blank lines and <code>//</code> comments are ignored.</li></ul></article>
+      <article class="info-card"><h3>CORE vs PROPOSED</h3><p>Only syntax with a defined behavior is listed as CORE. Concepts without a confirmed, complete grammar remain PROPOSED or reserved until the project owner approves their rules.</p><p>V3.3 is a browser demo, not a claim that every planned Zyrox feature is implemented.</p></article>
     </section>
   </main>
-
-  <footer><div class="wrap">© <span id="year"></span> Zyrox Project · Website demo, belum menjadi situs publik.</div></footer>
-  <script>
-
-    const $ = (id) => document.getElementById(id);
-    const starter = $('zyroxCode').value;
-    function splitArgs(s) {
-      const out=[]; let cur='', quote='', depth=0, esc=false;
-      for (let i=0;i<s.length;i++) { const c=s[i]; if(esc){cur+=c;esc=false;continue;} if(c==='\\'&&quote){cur+=c;esc=true;continue;} if(quote){cur+=c;if(c===quote)quote='';continue;} if(c==='"'||c==="'"){quote=c;cur+=c;continue;} if(c==='('||c==='['){depth++;cur+=c;continue;} if(c===')'||c===']'){depth--;cur+=c;continue;} if(c===','&&depth===0){out.push(cur.trim());cur='';}else cur+=c; }
-      if(cur.trim()||s.trim())out.push(cur.trim()); return out;
-    }
-    function parseLiteral(s, env, output) {
-      s=s.trim(); if(!s)return undefined;
-      if((s[0]==='"'&&s.at(-1)==='"')||(s[0]==="'"&&s.at(-1)==="'")) return s.slice(1,-1).replace(/\\n/g,'\n').replace(/\\t/g,'\t').replace(/\\"/g,'"').replace(/\\'/g,"'");
-      if(s==='true')return true;if(s==='false')return false;if(s==='null')return null;
-      if(/^-?(?:\d+\.?\d*|\.\d+)$/.test(s))return Number(s);
-      if(s.startsWith('[')&&s.endsWith(']'))return splitArgs(s.slice(1,-1)).map(x=>parseLiteral(x,env,output));
-      // Safe arithmetic and string concatenation parser; only literal operands and approved operators.
-      const plusParts=splitTopOperator(s,'+'); if(plusParts.length>1)return plusParts.map(x=>parseLiteral(x,env,output)).reduce((a,b)=>a+b);
-      const call=s.match(/^([A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*)\((.*)\)$/s);
-      if(call){const args=splitArgs(call[2]).map(x=>parseLiteral(x,env,output));return invoke(call[1],args,env,output);}
-      if(/^[A-Za-z_$][\w$]*$/.test(s)&&env.vars.has(s))return env.vars.get(s);
-      throw new Error('Ungkapan tidak dikenali: '+s);
-    }
-    function splitTopOperator(s,op){let q='',d=0,parts=[],last=0;for(let i=0;i<s.length;i++){let c=s[i];if(q){if(c===q&&s[i-1]!=='\\')q='';continue;}if(c==='"'||c==="'"){q=c;continue;}if(c==='('||c==='[')d++;else if(c===')'||c===']')d--;else if(c===op&&d===0){parts.push(s.slice(last,i).trim());last=i+1;}}if(parts.length){parts.push(s.slice(last).trim());return parts;}return [s];}
-    function invoke(name,a,env,out){
-      const n=name.toLowerCase(); const need=(count)=>{if(a.length<count)throw new Error(name+' membutuhkan minimal '+count+' argumen');};
-      if(n==='print.true'){out.push(a.map(v=>v===undefined?'':String(v)).join(' '));return a[0];}
-      if(n==='print.false')return undefined; // official Zyrox meaning: no display
-      if(['print.line','print.text','print.result','print.success','print.warning'].includes(n)){out.push(a.map(v=>v===undefined?'':String(v)).join(' '));return a[0];}
-      if(n==='print.number'){need(1);const v=Number(a[0]);if(!Number.isFinite(v))throw new Error('Print.number memerlukan angka');out.push(String(v));return v;}
-      if(n==='print.error'){out.push('ERROR: '+a.join(' '));return null;}
-      if(n==='print.clear'){out.length=0;return null;}
-      if(n==='print.empty'){out.push('');return '';}
-      if(n==='print.timestamp'){const v=new Date().toISOString();out.push(v);return v;}
-      if(n==='var.set'){need(2);env.vars.set(String(a[0]),a[1]);return a[1];}
-      if(n==='var.get'){need(1);if(!env.vars.has(String(a[0])))throw new Error('Variabel belum ada: '+a[0]);return env.vars.get(String(a[0]));}
-      if(n==='var.delete'||n==='var.reset')return env.vars.delete(String(a[0]));
-      if(n==='var.exists')return env.vars.has(String(a[0]));
-      if(n==='var.increment'||n==='var.decrement'){need(1);const k=String(a[0]);let v=Number(env.vars.get(k)||0)+(n.endsWith('increment')?1:-1);env.vars.set(k,v);return v;}
-      if(n==='input.text'||n==='input.get'||n==='input.line'){const v=prompt(String(a[0]??'Masukkan teks:'));return v??'';}
-      if(n==='input.number'){const v=Number(prompt(String(a[0]??'Masukkan angka:')));if(!Number.isFinite(v))throw new Error('Input bukan angka yang valid');return v;}
-      if(n==='input.confirm')return confirm(String(a[0]??'Lanjutkan?'));
-      if(n==='input.clear'){env.vars.delete(String(a[0]));return null;}
-      if(n.startsWith('math.')){need(1);const x=Number(a[0]),y=Number(a[1]);const m={'math.add':()=>x+y,'math.sub':()=>x-y,'math.mul':()=>x*y,'math.div':()=>{if(y===0)throw new Error('Pembagian dengan nol');return x/y;},'math.mod':()=>x%y,'math.pow':()=>x**y,'math.sqrt':()=>Math.sqrt(x),'math.abs':()=>Math.abs(x),'math.floor':()=>Math.floor(x),'math.ceil':()=>Math.ceil(x),'math.round':()=>Math.round(x),'math.min':()=>Math.min(...a.map(Number)),'math.max':()=>Math.max(...a.map(Number)),'math.sin':()=>Math.sin(x),'math.cos':()=>Math.cos(x),'math.tan':()=>Math.tan(x),'math.log':()=>Math.log(x)};if(!m[n])throw new Error('Command Math tidak dikenal: '+name);return m[n]();}
-      if(n.startsWith('compare.')||n.startsWith('logic.')){need(2);const x=a[0],y=a[1];const m={'compare.eq':()=>x===y,'compare.equal':()=>x===y,'compare.ne':()=>x!==y,'compare.gt':()=>x>y,'compare.gte':()=>x>=y,'compare.lt':()=>x<y,'compare.lte':()=>x<=y,'compare.contains':()=>String(x).includes(String(y)),'logic.and':()=>Boolean(x)&&Boolean(y),'logic.or':()=>Boolean(x)||Boolean(y),'logic.not':()=>!x};if(!m[n])throw new Error('Command Logic/Compare tidak dikenal: '+name);return m[n]();}
-      if(n.startsWith('string.')){need(1);const s=String(a[0]);const m={'string.upper':()=>s.toUpperCase(),'string.lower':()=>s.toLowerCase(),'string.trim':()=>s.trim(),'string.length':()=>s.length,'string.reverse':()=>[...s].reverse().join(''),'string.words':()=>s.trim()?s.trim().split(/\s+/):[],'string.includes':()=>s.includes(String(a[1]??'')),'string.starts':()=>s.startsWith(String(a[1]??'')),'string.ends':()=>s.endsWith(String(a[1]??'')),'string.replace':()=>s.replaceAll(String(a[1]??''),String(a[2]??'')),'string.slice':()=>s.slice(Number(a[1]||0),a[2]===undefined?undefined:Number(a[2])),'string.repeat':()=>s.repeat(Math.max(0,Math.min(1000,Number(a[1]||1))))};if(!m[n])throw new Error('Command String tidak dikenal: '+name);return m[n]();}
-      if(n.startsWith('convert.')){need(1);if(n==='convert.number'){const v=Number(a[0]);if(!Number.isFinite(v))throw new Error('Konversi angka gagal');return v;}if(n==='convert.text'||n==='convert.string')return String(a[0]);if(n==='convert.boolean')return Boolean(a[0]);if(n==='convert.integer')return Math.trunc(Number(a[0]));if(n==='convert.float')return parseFloat(a[0]);if(n==='convert.json')return JSON.stringify(a[0]);throw new Error('Convert tidak dikenal: '+name);}
-      if(n==='type.of')return a[0]===null?'null':Array.isArray(a[0])?'array':typeof a[0];
-      if(n==='array.create'){need(1);env.arrays.set(String(a[0]),[]);return env.arrays.get(String(a[0]));}
-      if(n==='array.push'||n==='list.add'){need(2);const k=String(a[0]);if(!env.arrays.has(k))env.arrays.set(k,[]);env.arrays.get(k).push(a[1]);return env.arrays.get(k).length;}
-      if(n==='array.get'||n==='list.get'){need(2);const ar=env.arrays.get(String(a[0]));if(!ar)throw new Error('Array tidak ditemukan: '+a[0]);return ar[Number(a[1])];}
-      if(n==='array.length'||n==='list.length'){const ar=env.arrays.get(String(a[0]));if(!ar)throw new Error('Array tidak ditemukan: '+a[0]);return ar.length;}
-      if(n==='array.pop'){const ar=env.arrays.get(String(a[0]));if(!ar)throw new Error('Array tidak ditemukan: '+a[0]);return ar.pop();}
-      if(n==='array.remove'){need(2);const ar=env.arrays.get(String(a[0]));if(!ar)throw new Error('Array tidak ditemukan: '+a[0]);const i=Number(a[1]);return ar.splice(i,1)[0];}
-      if(n==='array.join'){const ar=env.arrays.get(String(a[0]));if(!ar)throw new Error('Array tidak ditemukan: '+a[0]);return ar.join(String(a[1]??','));}
-      if(n==='random.int'){need(2);const lo=Math.ceil(Number(a[0])),hi=Math.floor(Number(a[1]));if(hi<lo)throw new Error('Batas Random.int tidak valid');return Math.floor(Math.random()*(hi-lo+1))+lo;}
-      if(n==='random.float')return Math.random();
-      if(n==='random.choice'){const ar=Array.isArray(a[0])?a[0]:env.arrays.get(String(a[0]));if(!ar?.length)throw new Error('Random.choice memerlukan array yang tidak kosong');return ar[Math.floor(Math.random()*ar.length)];}
-      if(n==='date.today')return new Date().toLocaleDateString('id-ID');
-      if(n==='date.now')return new Date().toLocaleString('id-ID');
-      if(n==='date.year')return new Date().getFullYear();if(n==='date.month')return new Date().getMonth()+1;if(n==='date.day')return new Date().getDate();
-      if(n==='date.iso')return new Date().toISOString();
-      if(n==='file.save'){need(2);const blob=new Blob([String(a[1])],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=String(a[0]||'zyrox.txt');link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);return 'Download dibuat: '+a[0];}
-      if(n==='file.read'){const textValue=prompt('Untuk File.read, tempel isi teks file yang ingin dibaca:');return textValue??'';}
-      if(n==='error.raise')throw new Error(String(a[0]??'Error diminta oleh program'));
-      if(n==='json.stringify')return JSON.stringify(a[0]);
-      if(n==='json.parse'){try{return JSON.parse(String(a[0]));}catch(e){throw new Error('JSON tidak valid');}}
-      throw new Error('Command tidak dikenal: '+name);
-    }
-    function runZyrox(code){const output=[];const env={vars:new Map(),arrays:new Map()};const lines=code.split(/\r?\n/);let steps=0;
-      for(let i=0;i<lines.length;i++){if(++steps>5000)throw new Error('Batas eksekusi terlampaui');let line=lines[i].trim();if(!line||line.startsWith('#')||line.startsWith('//'))continue;
-        // Creator's special text syntax: True-text hides, False-Text displays words one by one.
-        const special=line.match(/^\(#(.*?)\."(True-text|False-Text)\)$/i);if(special){if(special[2].toLowerCase()==='false-text')special[1].trim().split(/\s+/).forEach(w=>output.push(w));continue;}
-        // Allow assignment shorthand: Ref = value
-        const ref=line.match(/^Ref\s*=\s*(.+)$/i);if(ref){env.vars.set('Ref',parseLiteral(ref[1],env,output));continue;}
-        // Repeat blocks: Loop.repeat(n) [ command ] and Loop.range(start,end) [ command ]
-        const loop=line.match(/^Loop\.(repeat|range)\((.*?)\)\s*\[\s*(.+)\s*\]$/i);if(loop){const args=splitArgs(loop[2]).map(x=>parseLiteral(x,env,output));const count=loop[1].toLowerCase()==='repeat'?Math.max(0,Math.min(1000,Number(args[0]))):Math.max(0,Math.min(1000,Number(args[1])-Number(args[0])));for(let j=0;j<count;j++){let body=loop[3].replace(/\bIndex\b/g,String(loop[1].toLowerCase()==='range'?Number(args[0])+j:j));parseStatement(body,env,output);}continue;}
-        parseStatement(line,env,output);
-      }return output;
-    }
-    function parseStatement(line,env,out){line=line.trim().replace(/;$/,'');if(!line)return;const call=line.match(/^([A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*)\((.*)\)$/s);if(call){const args=splitArgs(call[2]).map(x=>parseLiteral(x,env,out));invoke(call[1],args,env,out);return;}const assign=line.match(/^([A-Za-z_$][\w$]*)\s*=\s*(.+)$/s);if(assign){env.vars.set(assign[1],parseLiteral(assign[2],env,out));return;}throw new Error('Sintaks tidak valid: '+line);}
-    $('runZyrox').addEventListener('click',()=>{const output=$('zyroxOutput');$('runStatus').textContent='Running…';try{const lines=runZyrox($('zyroxCode').value);output.textContent=lines.length?lines.join('\n'):'Program selesai tanpa output.';$('runStatus').textContent='Success';}catch(e){output.textContent='Syntax / Runtime Error\n'+e.message;$('runStatus').textContent='Error';}});
-    $('clearOutput').addEventListener('click',()=>{$('zyroxOutput').textContent='';$('runStatus').textContent='Output cleared';});
-    $('resetCode').addEventListener('click',()=>{$('zyroxCode').value=starter;$('runStatus').textContent='Ready';});
-    $('year').textContent = new Date().getFullYear();
-
-  </script>
+</div>
+<footer><div class="wrap footer-row"><span>© Zyrox Language Project · V3.3 Web Edition</span><span>Made for learning, testing, and experimenting.</span></div></footer>
+<div class="toast" id="toast" role="status"></div>
 <script>
-  // Make the demo CTA useful without changing interpreter behavior.
-  document.getElementById('helloBtn')?.addEventListener('click', () => {
-    const editor = document.getElementById('zyroxCode');
-    if (editor) {
-      editor.value = 'Print.line("Hello from Zyrox V3.2!")\nPrint.line("Ready to experiment.")';
-      editor.focus();
-      document.getElementById('playground')?.scrollIntoView({behavior:'smooth',block:'start'});
-    }
-  });
+"use strict";
+const $ = (id) => document.getElementById(id);
+const code = $("code"), output = $("output");
+const syntax = [
+ {name:"Print.true",type:"CORE",sample:'Print.true("Hello World")',desc:"Displays the quoted text in the output console."},
+ {name:"Print.false",type:"CORE",sample:'Print.false("Hidden text")',desc:"Does not display the supplied text."},
+ {name:"// comment",type:"CORE",sample:"// This is a comment",desc:"A single-line comment; ignored by this playground."},
+ {name:"fact",type:"PROPOSED",sample:"fact …",desc:"Decision concept mentioned in project notes; exact grammar and execution rules need approval."},
+ {name:"not",type:"PROPOSED",sample:"not …",desc:"Alternative decision concept; exact grammar and execution rules need approval."},
+ {name:"[ ] block",type:"PROPOSED",sample:"[ … ]",desc:"Block/focus notation idea. Nested and execution behavior are not defined here."},
+ {name:"Ref",type:"PROPOSED",sample:"Ref …",desc:"Reference/position concept; argument format and behavior need confirmation."},
+ {name:"Input",type:"PROPOSED",sample:"Input(…)",desc:"Potential user-input feature; syntax and runtime behavior are not yet official."},
+ {name:"Array",type:"PROPOSED",sample:"Array(…)",desc:"Potential collection feature; reserved as an idea, not implemented."},
+ {name:"Loop",type:"PROPOSED",sample:"Loop(…)",desc:"Potential repetition feature; reserved as an idea, not implemented."},
+ {name:"Custom functions",type:"PROPOSED",sample:"Function …",desc:"Potential user-defined functions; declaration and calling syntax need approval."}
+];
+let activeFilter="ALL";
+function renderRegistry(){
+ const q=$("search").value.trim().toLowerCase();
+ const items=syntax.filter(s=>(activeFilter==="ALL"||s.type===activeFilter)&&[s.name,s.sample,s.desc,s.type].join(" ").toLowerCase().includes(q));
+ const grid=$("registryGrid"); grid.replaceChildren();
+ if(!items.length){const e=document.createElement("div");e.className="empty";e.textContent="No matching syntax found.";grid.append(e);return;}
+ for(const s of items){
+  const card=document.createElement("article");card.className="syntax-card";
+  const top=document.createElement("div");top.className="syntax-top";
+  const name=document.createElement("span");name.className="syntax-name";name.textContent=s.name;
+  const tag=document.createElement("span");tag.className="tag "+s.type.toLowerCase();tag.textContent=s.type;
+  top.append(name,tag);
+  const sample=document.createElement("code");sample.textContent=s.sample;
+  const desc=document.createElement("p");desc.textContent=s.desc;
+  card.append(top,sample,desc);
+  const copy=document.createElement("button");copy.className="btn small copy";copy.textContent="Copy syntax";
+  copy.addEventListener("click",()=>copyText(s.sample));
+  card.append(copy);grid.append(card);
+ }
+}
+function showToast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.remove("show"),1600);}
+async function copyText(text){
+ try{await navigator.clipboard.writeText(text);showToast("Copied to clipboard");}
+ catch(e){const ta=document.createElement("textarea");ta.value=text;document.body.append(ta);ta.select();document.execCommand("copy");ta.remove();showToast("Copied to clipboard");}
+}
+function updateLines(){const n=code.value.split("\n").length;$("lineCount").textContent=n+" line"+(n===1?"":"s");}
+function parseStatement(line,lineNo){
+ const s=line.trim();
+ if(!s||s.startsWith("//"))return {skip:true};
+ const m=s.match(/^Print\.(true|false)\s*\(\s*("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')\s*\)\s*;?$/i);
+ if(!m)throw new Error("Line "+lineNo+": unsupported or invalid syntax. Try Print.true(\"Hello World\").");
+ if(m[1].toLowerCase()==="false")return {skip:true};
+ let raw=m[2].slice(1,-1);
+ raw=raw.replace(/\\(["'\\nrt])/g,(_,c)=>({"n":"\n","r":"\r","t":"\t"}[c]??c));
+ return {text:raw};
+}
+function runCode(){
+ const started=performance.now(), lines=code.value.split(/\r?\n/), results=[];
+ try{
+  for(let i=0;i<lines.length;i++){const r=parseStatement(lines[i],i+1);if(r.text!==undefined)results.push(r.text);}
+  output.replaceChildren();
+  if(results.length===0){const span=document.createElement("span");span.className="placeholder";span.textContent="Program finished successfully. No visible output.";output.append(span);}
+  else output.textContent=results.join("\n");
+  $("statusText").textContent="Executed successfully";$("statusDot").className="status-dot ok";
+  $("runInfo").textContent="Finished in "+Math.max(0,(performance.now()-started)).toFixed(2)+" ms";
+ }catch(err){
+  output.replaceChildren();const span=document.createElement("span");span.className="error";span.textContent="ZYROX ERROR\n"+err.message;output.append(span);
+  $("statusText").textContent="Execution error";$("statusDot").className="status-dot err";$("runInfo").textContent="Execution stopped";
+ }
+}
+$("runBtn").addEventListener("click",runCode);
+$("clearBtn").addEventListener("click",()=>{code.value="";updateLines();code.focus();});
+$("exampleBtn").addEventListener("click",()=>{code.value='Print.true("Hello World")\nPrint.true("Welcome to Zyrox V3.3")\nPrint.false("You will not see this")\n// Only documented CORE syntax runs in this demo.';updateLines();});
+$("copyOutput").addEventListener("click",()=>copyText(output.innerText));
+code.addEventListener("input",updateLines);
+code.addEventListener("keydown",e=>{if(e.key==="Tab"){e.preventDefault();const a=code.selectionStart,b=code.selectionEnd;code.setRangeText("  ",a,b,"end");updateLines();}});
+$("search").addEventListener("input",renderRegistry);
+document.querySelectorAll(".tab").forEach(tab=>tab.addEventListener("click",()=>{activeFilter=tab.dataset.filter;document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",String(t===tab)));renderRegistry();}));
+renderRegistry();updateLines();
 </script>
 </body>
 </html>
