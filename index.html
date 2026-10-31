@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#030916">
-<title>ZYROX CODEX — V3.4</title>
+<title>ZYROX CODEX — V3.4.1 ULTIMATE</title>
 <meta name="description" content="Zyrox Codex V3.4 — futuristic programming language playground, interpreter and syntax documentation.">
 <style>
 :root{color-scheme:dark;--bg:#030916;--panel:#08172a;--panel2:#0c2037;--line:#183b5b;--cyan:#43e8ff;--blue:#4c8dff;--mint:#62ffd0;--text:#eaf8ff;--muted:#8ba9c5;--violet:#9b8cff;--red:#ff718b;--green:#67f5b2;--shadow:0 20px 70px #0009}
@@ -35,34 +35,34 @@
 footer{border-top:1px solid #163852;color:#6485a0;padding:20px 0;font-size:10px;letter-spacing:.08em}.footer-inner{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.toast{position:fixed;bottom:18px;left:50%;transform:translate(-50%,20px);opacity:0;z-index:90;background:#d5fff5;color:#05221b;padding:10px 15px;border-radius:8px;font-size:12px;font-weight:900;transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:900px){.boot-panels{grid-template-columns:1fr 1.2fr}.boot-panels .hud:last-child{display:none}.hero{grid-template-columns:1fr}.hero-art{display:none}.cards{grid-template-columns:repeat(2,1fr)}.registry-grid{grid-template-columns:repeat(2,1fr)}.workspace{grid-template-columns:1fr}.editor,.console{min-height:260px}.nav{align-items:flex-start;padding:12px 0;flex-direction:column}.navlinks{width:100%;overflow-x:auto;flex-wrap:nowrap}.navlinks button{white-space:nowrap}.navstate{display:none}}
 @media(max-width:580px){.boot-shell{min-height:96vh}.boot-panels{grid-template-columns:1fr}.boot-panels .hud:nth-child(2){display:block}.boot-log{min-height:90px}.boot-top,.boot-bottom{font-size:9px}.boot-bottom span:last-child{display:none}.metrics{grid-template-columns:repeat(2,1fr)}.cards,.registry-grid,.team{grid-template-columns:1fr}.doc-grid{grid-template-columns:1fr}.doc-nav{display:flex;gap:5px;overflow-x:auto}.doc-nav a{white-space:nowrap}.hero{padding:24px 19px}.container,.nav{width:calc(100% - 22px)}.page{padding-top:17px}.section-title{align-items:start;flex-direction:column}.editor{min-height:250px;font-size:12px;padding:13px}.console{min-height:230px}.brand-sub{display:none}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+body.motion-off *,body.motion-off *:before,body.motion-off *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 </style>
 </head>
 <body>
 <section id="boot" aria-label="Zyrox Codex startup">
  <canvas class="stars" id="stars"></canvas><div class="boot-grid"></div>
  <div class="boot-shell">
-  <div class="boot-top"><div class="sysmark"><span class="zmark">Z</span><span>ZYROX SYSTEM<br><small style="color:#6e9ab9;font-weight:500">V3.4.0 · CODEX EDITION</small></span></div><span class="online">SYSTEM ONLINE · ORION NODE</span></div>
+  <div class="boot-top"><div class="sysmark"><span class="zmark">Z</span><span>ZYROX SYSTEM<br><small style="color:#6e9ab9;font-weight:500">V3.4.1 · CODEX EDITION</small></span></div><span class="online">SYSTEM ONLINE · ORION NODE</span></div>
   <div class="boot-center"><div class="orbit"></div><h1 class="brand3d">ZYROX</h1><div class="codex-word">C O D E X</div><p class="tagline">NEXT GENERATION PROGRAMMING LANGUAGE</p>
    <div class="boot-panels" style="margin-top:30px;text-align:left">
     <div class="hud"><b>CORE MODULES</b><br>› Interpreter Engine<br>› Mega Syntax Registry<br>› Codex Documentation<br>› Runtime Environment</div>
     <div class="hud boot-log" id="bootLog"><b>&gt; SYSTEM BOOT</b><div class="logline">[+] Initializing Zyrox Core...</div></div>
     <div class="hud"><b>CODE BEYOND LIMITS</b><br>Build · Explore · Create<br><br><span style="color:#62ffd0">● All systems nominal</span></div>
    </div>
-   <div style="max-width:520px;margin:16px auto 0"><div class="progress-track"><div class="progress-fill" id="bootProgress"></div></div><div class="progress-caption"><span id="bootStatus">INITIALIZING SYSTEM</span><b id="bootPercent">0%</b></div><div class="ready" id="readyText" style="margin-top:8px">PREPARING CODEX ENVIRONMENT</div><button class="enter" id="enterBtn" disabled>ENTER ZYROX CODEX&nbsp; ›</button><button class="skip" id="skipBtn">Skip intro</button></div>
+   <div style="max-width:520px;margin:16px auto 0"><div class="progress-track"><div class="progress-fill" id="bootProgress"></div></div><div class="progress-caption"><span id="bootStatus">INITIALIZING SYSTEM</span><b id="bootPercent">0%</b></div><div class="ready" id="readyText" style="margin-top:8px">PREPARING CODEX ENVIRONMENT</div><button class="enter" id="enterBtn" disabled>ENTER ZYROX CODEX&nbsp; ›</button><button class="skip" id="skipBtn">Skip intro</button><button class="skip" id="motionBtn" type="button" aria-pressed="false">Motion effects: ON</button></div>
   </div>
   <div class="boot-bottom"><span>PROJECT TEAM · <strong>GPT</strong> / GEMINI / DOLA / ULWAN</span><span>EXPERIMENTAL PROJECT · <strong>BUILD 3.4.0</strong></span><span>© ZYROX LANGUAGE PROJECT</span></div>
  </div>
 </section>
 <div id="app">
 <header class="topbar"><div class="nav">
- <a class="brand" href="#" data-page-link="home"><span class="brand-icon">Z</span><span><span class="brand-title">ZYROX</span><span class="brand-sub">CODEX · V3.4 ULTIMATE</span></span></a>
+ <a class="brand" href="#" data-page-link="home"><span class="brand-icon">Z</span><span><span class="brand-title">ZYROX</span><span class="brand-sub">CODEX · V3.4.1 ULTIMATE</span></span></a>
  <nav class="navlinks" aria-label="Main navigation"><button class="active" data-page="home">⌂ HOME</button><button data-page="interpreter">⌘ INTERPRETER</button><button data-page="registry">▤ SYNTAX REGISTRY</button><button data-page="docs">▣ DOCS</button><button data-page="about">ⓘ ABOUT</button></nav>
  <span class="navstate">● SYSTEM READY</span>
 </div></header>
 <main class="container">
 <section class="page active" id="page-home">
- <div class="hero"><div><div class="kicker">A new dimension of code · Build 3.4.0</div><h1>WELCOME TO<br><span class="shine">ZYROX CODEX.</span></h1><p class="lead">A futuristic home for the Zyrox experimental programming language. Explore the syntax, test commands in the browser interpreter, and build something new.</p><div class="actions"><button class="btn primary" data-go="interpreter">LAUNCH INTERPRETER ↗</button><button class="btn" data-go="registry">EXPLORE SYNTAX</button><button class="btn ghost" data-go="docs">OPEN CODEX DOCS</button></div></div><div class="hero-art"><div class="core-orb">Z</div></div></div>
+ <div class="hero"><div><div class="kicker">A new dimension of code · Build 3.4.1</div><h1>WELCOME TO<br><span class="shine">ZYROX CODEX.</span></h1><p class="lead">A futuristic home for the Zyrox experimental programming language. Explore the syntax, test commands in the browser interpreter, and build something new.</p><div class="actions"><button class="btn primary" data-go="interpreter">LAUNCH INTERPRETER ↗</button><button class="btn" data-go="registry">EXPLORE SYNTAX</button><button class="btn ghost" data-go="docs">OPEN CODEX DOCS</button></div></div><div class="hero-art"><div class="core-orb">Z</div></div></div>
  <div class="metrics"><div class="metric"><strong>V3.4</strong><span>CODEX EDITION</span></div><div class="metric"><strong>20+</strong><span>COMMANDS & CORE FORMS</span></div><div class="metric"><strong>5</strong><span>CODEX SECTIONS</span></div><div class="metric"><strong>100%</strong><span>BROWSER BASED</span></div></div>
  <div class="section-title"><div><h2>CODEX MODULES</h2><p>Everything in one experimental workspace.</p></div></div>
  <div class="cards"><article class="card"><div class="glyph">⌘</div><h3>Interpreter Engine</h3><p>Write Zyrox commands and run them in a safe, browser-based runtime.</p></article><article class="card"><div class="glyph">▤</div><h3>Mega Syntax Registry</h3><p>Search command references and distinguish implemented syntax from experimental additions.</p></article><article class="card"><div class="glyph">▣</div><h3>Codex Documentation</h3><p>Read the language basics, examples, runtime notes, and project conventions.</p></article></div>
@@ -82,7 +82,7 @@ Array.push("games", "Minecraft")
 Print.line("Favorite: " + Array.get("games", 0))
 Print.line("Random: " + Random.int(1, 100))
 Print.line("Today: " + Date.today())</textarea><div class="panel-actions"><button class="btn primary" id="runBtn">▶ RUN CODE</button><button class="btn" id="exampleBtn">LOAD EXAMPLE</button><button class="btn" id="clearBtn">CLEAR EDITOR</button><button class="btn" id="resetBtn">RESET</button></div></section>
-  <section class="panel"><div class="panel-head"><strong>⌁ OUTPUT CONSOLE</strong><span id="runStatus" class="status">WAITING</span></div><div id="output" class="console"><span class="muted">Zyrox Codex Runtime V3.4.0<br>Ready to execute. Press RUN CODE.</span></div><div class="panel-actions"><button class="btn" id="copyOutput">COPY OUTPUT</button><button class="btn" id="clearOutput">CLEAR OUTPUT</button></div></section>
+  <section class="panel"><div class="panel-head"><strong>⌁ OUTPUT CONSOLE</strong><span id="runStatus" class="status">WAITING</span></div><div id="output" class="console"><span class="muted">Zyrox Codex Runtime V3.4.1<br>Ready to execute. Press RUN CODE.</span></div><div class="panel-actions"><button class="btn" id="copyOutput">COPY OUTPUT</button><button class="btn" id="clearOutput">CLEAR OUTPUT</button></div></section>
  </div><p class="hint">Tip: use Print.line(...) for output. Input.text(...) opens a browser prompt. File.save(...) creates a download only after the command is run.</p>
 </section>
 <section class="page" id="page-registry">
@@ -115,27 +115,27 @@ Date.today()</pre><p>Arrays use zero-based indexes. Random.int includes both end
  <div class="team"><div class="member"><div class="avatar">G</div><b>GPT</b><small>Owner · Lead Developer</small></div><div class="member"><div class="avatar">G</div><b>Gemini</b><small>Co-Owner · Manager</small></div><div class="member"><div class="avatar">D</div><b>Dola</b><small>Contributor</small></div><div class="member"><div class="avatar">U</div><b>Ulwan</b><small>Tester · Original Creator</small></div></div>
 </section>
 </main>
-<footer><div class="container footer-inner"><span>© ZYROX LANGUAGE PROJECT · CODEX V3.4.0</span><span>MADE FOR LEARNING, TESTING & EXPLORATION</span><span>CODE BEYOND LIMITS.</span></div></footer>
+<footer><div class="container footer-inner"><span>© ZYROX LANGUAGE PROJECT · CODEX V3.4.1</span><span>MADE FOR LEARNING, TESTING & EXPLORATION</span><span>CODE BEYOND LIMITS.</span></div></footer>
 </div>
 <div class="toast" id="toast">COPIED</div>
 <script>
 "use strict";
 const $=id=>document.getElementById(id);
-const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let motionOff=false;
 const boot=$("boot"),app=$("app"),enter=$("enterBtn"),progress=$("bootProgress"),percent=$("bootPercent"),bootStatus=$("bootStatus"),bootLog=$("bootLog");
 let bootDone=false,bootTimer=null;
 const bootMessages=["[+] Initializing Zyrox Core...","[+] Loading Interpreter Engine...","[+] Loading Mega Syntax Registry...","[+] Mounting Codex Documentation...","[+] Preparing User Interface...","[+] Checking Runtime Modules...","[+] System Ready."];
 let logIndex=1,bootValue=0;
 function addBootLine(s){const d=document.createElement("div");d.className="logline";d.textContent=s;bootLog.append(d)}
 function finishBoot(){if(bootDone)return;bootDone=true;clearInterval(bootTimer);progress.style.width="100%";percent.textContent="100%";bootStatus.textContent="SYSTEM READY";$("readyText").textContent="ALL MODULES ONLINE · WELCOME";enter.disabled=false;enter.textContent="ENTER ZYROX CODEX  ›"}
-function startBoot(){if(reduced){finishBoot();return}bootTimer=setInterval(()=>{bootValue=Math.min(100,bootValue+Math.ceil(Math.random()*5+2));progress.style.width=bootValue+"%";percent.textContent=bootValue+"%";if(bootValue>logIndex*13&&logIndex<bootMessages.length){addBootLine(bootMessages[logIndex++])}if(bootValue>=100)finishBoot()},110)}
-function enterApp(){clearInterval(bootTimer);boot.classList.add("leaving");setTimeout(()=>{boot.classList.add("hidden");app.classList.add("ready");showPage("home")},reduced?0:650)}
-enter.addEventListener("click",enterApp);$("skipBtn").addEventListener("click",()=>{finishBoot();enterApp()});startBoot();
+function startBoot(){bootTimer=setInterval(()=>{bootValue=Math.min(100,bootValue+Math.ceil(Math.random()*5+2));progress.style.width=bootValue+"%";percent.textContent=bootValue+"%";if(bootValue>logIndex*13&&logIndex<bootMessages.length){addBootLine(bootMessages[logIndex++])}if(bootValue>=100)finishBoot()},110)}
+function enterApp(){clearInterval(bootTimer);boot.classList.add("leaving");setTimeout(()=>{boot.classList.add("hidden");app.classList.add("ready");showPage("home")},motionOff?0:650)}
+enter.addEventListener("click",enterApp);$("skipBtn").addEventListener("click",()=>{finishBoot();enterApp()});$("motionBtn").addEventListener("click",()=>{motionOff=!motionOff;document.body.classList.toggle("motion-off",motionOff);$("motionBtn").textContent="Motion effects: "+(motionOff?"OFF":"ON");$("motionBtn").setAttribute("aria-pressed",String(motionOff));if(!motionOff)requestAnimationFrame(drawStars)});startBoot();
 const canvas=$("stars"),ctx=canvas.getContext("2d");let stars=[];
 function resizeStars(){canvas.width=innerWidth*devicePixelRatio;canvas.height=innerHeight*devicePixelRatio;stars=Array.from({length:Math.min(150,Math.floor(innerWidth/7))},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,z:Math.random()*1.8+.2,r:Math.random()*1.3+.2}))}
-function drawStars(){if(!ctx||reduced)return;ctx.clearRect(0,0,canvas.width,canvas.height);for(const s of stars){s.y+=s.z*devicePixelRatio;if(s.y>canvas.height){s.y=0;s.x=Math.random()*canvas.width}ctx.fillStyle="rgba(130,220,255,"+(.2+s.z*.35)+")";ctx.beginPath();ctx.arc(s.x,s.y,s.r*devicePixelRatio,0,Math.PI*2);ctx.fill()}requestAnimationFrame(drawStars)}
-resizeStars();if(!reduced)drawStars();addEventListener("resize",resizeStars);
-function showPage(name){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+name));document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===name));if(name==="interpreter")updateLines();window.scrollTo({top:0,behavior:reduced?"auto":"smooth"})}
+function drawStars(){if(!ctx||motionOff)return;ctx.clearRect(0,0,canvas.width,canvas.height);for(const s of stars){s.y+=s.z*devicePixelRatio;if(s.y>canvas.height){s.y=0;s.x=Math.random()*canvas.width}ctx.fillStyle="rgba(130,220,255,"+(.2+s.z*.35)+")";ctx.beginPath();ctx.arc(s.x,s.y,s.r*devicePixelRatio,0,Math.PI*2);ctx.fill()}requestAnimationFrame(drawStars)}
+resizeStars();drawStars();addEventListener("resize",resizeStars);
+function showPage(name){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+name));document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===name));if(name==="interpreter")updateLines();window.scrollTo({top:0,behavior:motionOff?"auto":"smooth"})}
 document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.go)));
 document.querySelectorAll("[data-page-link]").forEach(b=>b.addEventListener("click",e=>{e.preventDefault();showPage(b.dataset.pageLink)}));
@@ -161,6 +161,14 @@ const syntax=[
 ["Array.get","EXPERIMENTAL",'Array.get("items", 0)',"Reads an array item using a zero-based index."],
 ["Random.int","EXPERIMENTAL","Random.int(1, 100)","Returns a random integer, including both limits."],
 ["Date.today","EXPERIMENTAL","Date.today()","Returns today's date in YYYY-MM-DD format."],
+["Compare.equal","EXPERIMENTAL","Compare.equal(5, 5)","Checks whether two values are equal."],
+["Compare.greater","EXPERIMENTAL","Compare.greater(9, 4)","Checks whether the first number is greater."],
+["Compare.less","EXPERIMENTAL","Compare.less(2, 8)","Checks whether the first number is smaller."],
+["Convert.number","EXPERIMENTAL",'Convert.number("42")',"Converts a value to a finite number."],
+["Convert.text","EXPERIMENTAL","Convert.text(42)","Converts a value to text."],
+["Loop.repeat","EXPERIMENTAL",`Loop.repeat(3, 'Print.line("Hi")')`,"Repeats one Zyrox statement a specified number of times."],
+["Function.define","EXPERIMENTAL",`Function.define("greet", 'Print.line("Hello")')`,"Defines a reusable one-statement custom function."],
+["Function.call","EXPERIMENTAL",'Function.call("greet")',"Runs a previously defined custom function."],
 ["Input.text","EXPERIMENTAL",'Input.text("Your name?")',"Requests text through a browser prompt."],
 ["File.save","EXPERIMENTAL",'File.save("note.txt", "Hello")',"Creates a browser download; does not access arbitrary device files."],
 ["// comment","CORE","// This is a comment","Single-line comment; ignored by the interpreter."],
@@ -169,7 +177,7 @@ const syntax=[
 let activeFilter="ALL";
 function renderRegistry(){const q=$("syntaxSearch").value.trim().toLowerCase(),grid=$("registryGrid");grid.replaceChildren();const items=syntax.filter(s=>(activeFilter==="ALL"||s[1]===activeFilter)&&s.join(" ").toLowerCase().includes(q));if(!items.length){const e=document.createElement("div");e.textContent="No syntax found.";e.className="card";grid.append(e);return}for(const s of items){const c=document.createElement("article");c.className="syntax-card";const h=document.createElement("div");h.className="syntax-head";const n=document.createElement("b");n.textContent=s[0];const tag=document.createElement("span");tag.className="badge "+(s[1]==="CORE"?"":"exp");tag.textContent=s[1];h.append(n,tag);const code=document.createElement("code");code.textContent=s[2];const p=document.createElement("p");p.textContent=s[3];const b=document.createElement("button");b.className="btn";b.textContent="COPY COMMAND";b.addEventListener("click",()=>copyText(s[2]));c.append(h,code,p,b);grid.append(c)}}
 $("syntaxSearch").addEventListener("input",renderRegistry);document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{activeFilter=b.dataset.filter;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));renderRegistry()}));renderRegistry();
-const code=$("code"),output=$("output"),vars=new Map(),arrays=new Map();
+const code=$("code"),output=$("output"),vars=new Map(),arrays=new Map(),functions=new Map();
 const example=code.value;
 function updateLines(){const n=code.value.split(/\r?\n/).length;$("lineCount").textContent=n+" LINE"+(n===1?"":"S")+" · main.zyx"}
 code.addEventListener("input",updateLines);code.addEventListener("keydown",e=>{if(e.key==="Tab"){e.preventDefault();code.setRangeText("  ",code.selectionStart,code.selectionEnd,"end");updateLines()}});
@@ -184,13 +192,17 @@ case"math.add":return num(0)+num(1);case"math.sub":return num(0)-num(1);case"mat
 case"string.upper":return str(0).toUpperCase();case"string.lower":return str(0).toLowerCase();case"string.length":return str(0).length;
 case"array.create":arrays.set(str(0),[]);return undefined;case"array.push":{const a=arrays.get(str(0));if(!a)throw new Error("Line "+lineNo+": array not found: "+str(0));a.push(v(1));return a.length}case"array.get":{const a=arrays.get(str(0)),i=num(1);if(!a)throw new Error("Line "+lineNo+": array not found: "+str(0));if(!Number.isInteger(i)||i<0||i>=a.length)throw new Error("Line "+lineNo+": array index out of range.");return a[i]}
 case"random.int":{const a=Math.ceil(num(0)),b=Math.floor(num(1));if(b<a)throw new Error("Line "+lineNo+": Random.int maximum must be >= minimum.");return Math.floor(Math.random()*(b-a+1))+a}
+case"compare.equal":return v(0)===v(1);case"compare.greater":return num(0)>num(1);case"compare.less":return num(0)<num(1);
+case"convert.number":{const n=Number(v(0));if(!Number.isFinite(n))throw new Error("Line "+lineNo+": cannot convert value to number.");return n}case"convert.text":return str(0);
+case"loop.repeat":{const count=num(0),body=str(1);if(!Number.isInteger(count)||count<0||count>1000)throw new Error("Line "+lineNo+": Loop.repeat count must be an integer from 0 to 1000.");const repeated=[];for(let i=0;i<count;i++){const r=parseLine(body,lineNo);if(!r.skip&&r.value!==undefined&&r.value!=="__CLEAR__")repeated.push(String(r.value))}return repeated.join("\n")}
+case"function.define":{const functionName=str(0),body=str(1);if(!/^[A-Za-z_][\w-]*$/.test(functionName))throw new Error("Line "+lineNo+": invalid function name.");functions.set(functionName.toLowerCase(),body);return undefined}case"function.call":{const fn=functions.get(str(0).toLowerCase());if(fn===undefined)throw new Error("Line "+lineNo+": custom function not found: "+str(0));const r=parseLine(fn,lineNo);return r.skip?undefined:r.value}
 case"date.today":return new Date().toISOString().slice(0,10);
 case"input.text":{const answer=prompt(args.length?str(0):"Zyrox input:");return answer===null?"":answer}
 case"file.save":{const filename=str(0),content=str(1),blob=new Blob([content],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);return"File download created: "+filename}
 default:throw new Error("Line "+lineNo+": unknown command '"+name+"'. Check the Syntax Registry.")}
 }
 function parseLine(line,lineNo){let s=line.trim();if(!s||s.startsWith("//")||s.startsWith("#"))return{skip:true};s=s.replace(/;$/,"").trim();const call=s.match(/^([A-Za-z_][\w.]*)\s*\((.*)\)$/);if(!call)throw new Error("Line "+lineNo+": invalid statement. Expected Command(arguments).");return{value:executeCall(call[1],splitArgs(call[2]),lineNo)}}
-function runCode(){vars.clear();arrays.clear();const lines=code.value.split(/\r?\n/),results=[];try{for(let i=0;i<lines.length;i++){const r=parseLine(lines[i],i+1);if(r.value==="__CLEAR__"){results.length=0;continue}if(!r.skip&&r.value!==undefined)results.push(String(r.value))}output.textContent=results.length?results.join("\n"):"Program finished successfully. No visible output.";output.className="console";$("runStatus").textContent="● EXECUTED";$("runStatus").style.color="var(--mint)"}catch(e){output.textContent="ZYROX ERROR\n"+e.message;output.className="console err";$("runStatus").textContent="● ERROR";$("runStatus").style.color="var(--red)"}}
+function runCode(){vars.clear();arrays.clear();functions.clear();const lines=code.value.split(/\r?\n/),results=[];try{for(let i=0;i<lines.length;i++){const r=parseLine(lines[i],i+1);if(r.value==="__CLEAR__"){results.length=0;continue}if(!r.skip&&r.value!==undefined)results.push(String(r.value))}output.textContent=results.length?results.join("\n"):"Program finished successfully. No visible output.";output.className="console";$("runStatus").textContent="● EXECUTED";$("runStatus").style.color="var(--mint)"}catch(e){output.textContent="ZYROX ERROR\n"+e.message;output.className="console err";$("runStatus").textContent="● ERROR";$("runStatus").style.color="var(--red)"}}
 $("runBtn").addEventListener("click",runCode);$("exampleBtn").addEventListener("click",()=>{code.value=example;updateLines()});$("clearBtn").addEventListener("click",()=>{code.value="";updateLines();code.focus()});$("resetBtn").addEventListener("click",()=>{code.value=example;updateLines();output.textContent="Editor reset. Ready to run.";output.className="console"});$("clearOutput").addEventListener("click",()=>{output.textContent="Output cleared.";output.className="console"});$("copyOutput").addEventListener("click",()=>copyText(output.innerText));
 function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1500)}
 async function copyText(text){try{await navigator.clipboard.writeText(text)}catch(e){const t=document.createElement("textarea");t.value=text;document.body.append(t);t.select();document.execCommand("copy");t.remove()}toast("COPIED TO CLIPBOARD")}
